@@ -1,0 +1,572 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+	<ui:composition template="/masterArche.xhtml">
+		<ui:define name="head">
+		</ui:define>
+		<ui:define name="title">Edition Tâche</ui:define>
+		<ui:define name="contentCore">
+			<h2>Editer une tâche</h2>
+			<hr></hr>
+			<b:form>
+			<b:panel
+				id="panInfosTache"
+				hidden="#{mbEditerTache.affichageFormulaire}"
+				style-class="pannel2">
+				<b:row>
+					<b:column span="2" offset="1">
+						<b:inputText
+							label="Terrain"
+							readonly="true"
+							id="ddlTerrain"
+							value="#{mbEditerTache.terrainChoisi.libelleTerrain}"
+							/>
+					</b:column>
+					<b:column span="2">
+						<b:inputText
+							label="Parcelle"
+							readonly="true"
+							id="ddlParcelle"
+							value="#{mbEditerTache.parcelleChoisie.libelleParcelle}"
+							/>
+					</b:column>
+					<b:column span="6">
+						<b:inputText
+							id="txtIntituleTache"
+							label="Intitulé de la tâche"
+							placeholder="Saisissez un intitulé"
+							binding="#{mbEditerTache.libelleTache}"
+							style="margin-bottom: 50px;"
+							/>
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column span="2" offset="1">
+						<b:inputText
+							label="Plante"
+							readonly="true"
+							id="ddlPlante"
+							value="#{mbEditerTache.planteChoisie.libellePlante}"
+							/>
+					</b:column>
+					<b:column span="3" offset="2">
+						<b:dateTimePicker
+							id="dateTache"
+							label="Date"
+							binding="#{mbEditerTache.dateComponent}"
+							format="YYYY-MM-DD"
+							useCurrent="true"
+							keep-open="false"
+							placeholder="Date de la tâche"
+							allow-input-toggle="false"
+							icon-position="right"
+							side-by-side="false"
+							required="false"
+							show-date="true" show-time="false" show-icon="true"
+							use-current="true"
+							/>
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column span="2" offset="1">
+						<b:inputText
+							label="Action"
+							readonly="true"
+							id="ddlAction"
+							value="#{mbEditerTache.actionChoisie.libelleAction}"
+							/>
+					</b:column>
+					<b:column span="3" offset="2">
+						<b:touchSpin
+							id="tsHeureDebut"
+							min="7" max="18" step="1"
+							value="#{mbEditerTache.heureDebutTache}"
+							inline="true"
+							label="Début"
+							postfix="H"
+							/>
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column span="2" offset="1">
+						<b:selectOneMenu
+							id="ddlCompetence"
+							value="#{mbEditerTache.competenceRequise}"
+							label="Compétence"
+							>
+							<f:selectItems
+								value="#{mbEditerTache.competences}"
+								var="competence"
+								itemValue="#{competence}"
+								itemLabel="#{competence.libelleCompetence}"
+								/>
+						</b:selectOneMenu>
+					</b:column>
+					<b:column span="3" offset="2">
+						<b:touchSpin
+							id="tsHeureFin"
+							min="8" max="19" step="1"
+							value="#{mbEditerTache.heureFinTache}"
+							inline="true"
+							label="Fin"
+							postfix="H"
+							/>
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column span="2" offset="1">
+						<b:touchSpin
+							id="tsNbJardiniers"
+							value="#{mbEditerTache.nbJardiniersChoisi}"
+							min="0" max="99" step="1"
+							label="Nombre de jardiniers requis" initval="0"
+							/>
+					</b:column>
+				</b:row>
+				<b:row style="position: relative; left: 70px;">
+					<b:column span="3" offset="6">
+						<b:commandButton
+							id="btnAdherentsDisponibles"
+							value="Jardiniers disponibles"
+							icon-awesome="fa-angle-double-right"
+							icon-align="right"
+							>
+							<f:ajax
+								render="panInfosTache panTableauxAdherents panTableauxOutils dataTableDisponibles dataTableAffectes dataTableOutilsDisponibles dataTableOutilsAffectes dataTableQuantitesOutilAllouees" 
+								execute="dateTache tsHeureDebut tsHeureFin ddlCompetence txtIntituleTache ddlPlante ddlAction tsNbJardiniers"
+								listener="#{mbEditerTache.listerDisponibles()}"
+								/>
+						</b:commandButton>
+					</b:column>
+				</b:row>
+			</b:panel>
+			
+			
+			<b:panel
+				id="panTableauxAdherents"
+				hidden="#{mbEditerTache.affichageTableauxAdherents}"
+				style-class="pannel2"
+				>
+				<b:row>
+					<b:column span="5">
+						<b:dataTable
+							id="dataTableDisponibles"
+							value="#{mbEditerTache.adherentsDisponibles}"
+							caption="- Jardiniers disponibles et compétents -"
+							var="adherentDisponible"
+							select="true"
+							onselect="ajax:mbEditerTache.selectionnerAdherentDisponible(indexes)"
+							ondeselect="ajax:mbEditerTache.deselectionnerAdherentDisponible(indexes)"
+							ajax="true"
+							searching="false"
+							info="false"
+							responsive="true"
+							striped="false"
+							style="background-color: FloralWhite;"
+							>
+							<b:dataTableColumn
+								value="#{adherentDisponible.nomNaissance}"
+								label="Nom"
+								_order="asc"
+								width="50%"
+								/>
+							<b:dataTableColumn
+								value="#{adherentDisponible.prenom}"
+								label="Prénom"
+								/>
+						</b:dataTable>
+					</b:column>
+					<b:column span="2" style="text-align: center; position: relative; top: 100px;">
+						<b:row style="padding: 5px">
+							<b:commandButton
+								id="btnDisponiblesVersAffectes"
+								iconAwesome="angle-double-right"
+								>
+								<f:ajax
+									render="dataTableDisponibles dataTableAffectes"
+									listener="#{mbEditerTache.validerSelectionDisponibles()}"
+									/>
+							</b:commandButton>
+						</b:row>
+						<b:row style="padding: 5px">
+							<b:commandButton
+								id="btnAffectesVersDisponibles"
+								iconAwesome="angle-double-left"
+								>
+								<f:ajax
+									render="dataTableDisponibles dataTableAffectes"
+									listener="#{mbEditerTache.validerSelectionAffectes()}"
+									/>
+							</b:commandButton>
+						</b:row>
+					</b:column>
+					<b:column span="5">
+						<b:dataTable
+							id="dataTableAffectes"
+							value="#{mbEditerTache.adherentsAffectes}"
+							caption="- Jardiniers affectés -"
+							var="adherentAffecte"
+							select="true"
+							onselect="ajax:mbEditerTache.selectionnerAdherentAffecte(indexes)"
+							ondeselect="ajax:mbEditerTache.deselectionnerAdherentAffecte(indexes)"
+							ajax="true"
+							searching="false"
+							info="false"
+							responsive="true"
+							striped="false"
+							style="background-color: FloralWhite;"
+							>
+							<b:dataTableColumn
+								value="#{adherentAffecte.nomNaissance}"
+								label="Nom"
+								_order="asc"
+								width="50%"
+								/>
+							<b:dataTableColumn
+								value="#{adherentAffecte.prenom}"
+								label="Prénom"
+								/>
+						</b:dataTable>
+					</b:column>
+				</b:row>
+				<b:row style="position: relative; left: 70px;">
+					<b:column span="3" offset="3" >
+						<b:commandButton
+							id="btnRetourFormulaire"
+							value="Modifier la tâche"
+							icon-awesome="fa-angle-double-left"
+							>
+							<f:ajax
+								render="panInfosTache panTableauxAdherents panTableauxOutils" 
+								listener="#{mbEditerTache.retourFormulaire()}"
+								/>
+						</b:commandButton>
+					</b:column>
+					<b:column span="3">
+						<b:commandButton
+							id="btnOutilsDisponibles"
+							value="Outils disponibles"
+							icon-awesome="fa-angle-double-right"
+							icon-align="right"
+							>
+							<f:ajax
+								render="panInfosTache panTableauxAdherents panTableauxOutils" 
+								listener="#{mbEditerTache.passerAuxOutils()}"
+								/>
+						</b:commandButton>
+					</b:column>
+				</b:row>
+				</b:panel>
+				
+				
+				<b:panel
+					id="panTableauxOutils"
+					hidden="#{mbEditerTache.affichageTableauxOutils}" 
+					style-class="pannel2">
+				<b:row>
+					<b:column span="5">
+						<b:dataTable
+							id="dataTableOutilsDisponibles"
+							value="#{mbEditerTache.outilsDisponibles}"
+							caption="- Outils disponibles -"
+							var="outilDisponible"
+							select="true"
+							onselect="ajax:mbEditerTache.selectionnerOutilDisponible(indexes)"
+							ondeselect="ajax:mbEditerTache.deselectionnerOutilDisponible(indexes)"
+							ajax="true"
+							searching="false"
+							info="false"
+							responsive="true"
+							striped="false"
+							style="background-color: FloralWhite;"
+							>
+							<b:dataTableColumn
+								value="#{outilDisponible.libelleOutil}"
+								label="Outil"
+								width="50%"
+								/>
+							<b:dataTableColumn
+								value="#{outilDisponible.quantiteOutilTotale}"
+								label="Quantité disponible"
+								/>
+						</b:dataTable>
+					</b:column>
+					<b:column span="2"  style="text-align: center; position: relative; top: 100px;">
+						<b:row style="padding: 5px">
+							<b:commandButton
+								id="btnOutilsDisponiblesVersAffectes"
+								iconAwesome="angle-double-right"
+								>
+								<f:ajax
+									render="dataTableOutilsDisponibles dataTableOutilsAffectes dataTableQuantitesOutilAllouees"
+									listener="#{mbEditerTache.validerSelectionOutilsDisponibles()}"
+									/>
+							</b:commandButton>
+						</b:row>
+						<b:row style="padding: 5px">
+							<b:commandButton
+								id="btnOutilsAffectesVersDisponibles"
+								iconAwesome="angle-double-left"
+								>
+								<f:ajax
+									render="dataTableOutilsDisponibles dataTableOutilsAffectes dataTableQuantitesOutilAllouees"
+									listener="#{mbEditerTache.validerSelectionOutilsAffectes()}"
+									/>
+							</b:commandButton>
+						</b:row>
+					</b:column>
+					<b:column span="3" style="position: relative; top: 30px;">
+						<b:dataTable
+							id="dataTableOutilsAffectes"
+							value="#{mbEditerTache.outilsAffectes}"
+							caption="- Outils alloués -"
+							var="outilAffecte"
+							select="true"
+							onselect="ajax:mbEditerTache.selectionnerOutilAffecte(indexes)"
+							ondeselect="ajax:mbEditerTache.deselectionnerOutilAffecte(indexes)"
+							ajax="true"
+							searching="false"
+							info="false"
+							responsive="true"
+							paginated="false"
+							striped="false"
+							style="background-color: FloralWhite;"
+							>
+							<b:dataTableColumn
+								value="#{outilAffecte.libelleOutil}"
+								label="Outil"
+								width="50%"
+								/>
+							<b:dataTableColumn
+								value="#{outilAffecte.quantiteOutilTotale}"
+								label="Quantite disponible"
+								style="height: 47px;"
+								/>
+						</b:dataTable>
+					</b:column>
+					<b:column span="2" style="position: relative; top: 76px; right: 32px;">
+						<b:dataTable
+							id="dataTableQuantitesOutilAllouees"
+							caption=""
+							value="#{mbEditerTache.quantitesOutilsUtilises}"
+							var="outilAffecte"
+							searching="false"
+							info="false"
+							responsive="true"
+							paginated="false"
+							striped="false"
+							style="background-color: FloralWhite; width: 196px;"
+							>
+							<b:dataTableColumn
+								label="Quantite Allouée"
+								>
+								<b:touchSpin
+									id="tsQuantiteOutilAllouee"
+									value="#{outilAffecte.quantiteAllouee}"
+									min="0" max="#{outilAffecte.quantiteOutilTotale}" step="1"
+									initval="0"
+									/>
+							</b:dataTableColumn>
+						</b:dataTable>
+					</b:column>
+				</b:row>
+				<b:row style="position: relative; left: 70px;">
+					<b:column span="3" offset="3">
+						<b:commandButton
+							id="btnRetourAdherent"
+							value="Modifier les jardiniers"
+							iconAwesome="angle-double-left"
+							>
+							<f:ajax
+								render="panInfosTache panTableauxAdherents panTableauxOutils" 
+								listener="#{mbEditerTache.retourAdherents()}"
+								/>
+						</b:commandButton>
+					</b:column>
+					<b:column span="3">
+						<b:commandButton
+							id="btnEditerTache"
+							value="Editer la tâche"
+							action="#{mbEditerTache.editerTache()}"
+							icon-awesome="fa-check-square-o"
+							/>
+					</b:column>
+				</b:row>
+				</b:panel>
+			</b:form>
+		</ui:define>
+	</ui:composition>
+</html>
+
+
+<!-- <?xml version='1.0' encoding='UTF-8' ?> -->
+<!-- <!DOCTYPE html> -->
+<!-- <html xmlns="http://www.w3.org/1999/xhtml" -->
+<!-- 	xmlns:ui="http://java.sun.com/jsf/facelets" -->
+<!-- 	xmlns:b="http://bootsfaces.net/ui" -->
+<!-- 	xmlns:h="http://java.sun.com/jsf/html" -->
+<!-- 	xmlns:f="http://java.sun.com/jsf/core" -->
+<!-- 	xmlns:p="http://primefaces.org/ui"> -->
+	
+<!-- 	<ui:composition template="/masterArche.xhtml"> -->
+<!-- 		<ui:define name="title">Formulaire tâche	</ui:define> -->
+		
+<!-- 		<ui:define name="script"> -->
+<!-- 			<script src="./resources/js/planning.js" type="text/javascript"></script> -->
+<!-- 		</ui:define> -->
+		
+	
+		
+<!-- 		<ui:define name="contentCore"> -->
+<!-- 		<h2>Editer une tâche</h2> -->
+<!-- 		<hr></hr> -->
+<!-- 		    <b:form> -->
+<!-- 				<b:panel id="panInfosTache" style-class="pannel2"> -->
+					
+<!-- 					<b:row> -->
+<!-- 						<b:column span="2" offset="1"> -->
+<!-- 							<b:selectOneMenu id="ddlTerrain" label="Terrain" value="#{mbEditerTache.terrainTache.libelleTerrain}"> -->
+<!-- 									<f:selectItems value="#{mbEditerTache.terrains}" -->
+<!-- 										var="terrain" -->
+<!-- 										itemValue="#{terrain.libelleTerrain}" -->
+<!-- 										itemLabel="#{terrain.libelleTerrain}"/> -->
+<!-- 							</b:selectOneMenu> -->
+<!-- 						</b:column> -->
+					
+<!-- 						<b:column span="2"> -->
+<!-- 							<b:selectOneMenu label="Parcelle" id="ddlParcelle" value="#{mbEditerTache.parcelleTache.libelleParcelle}"> -->
+<!-- 								<f:selectItems value="#{mbEditerTache.parcelles}" -->
+<!-- 										var="parcelle" -->
+<!-- 										itemValue="#{parcelle.libelleParcelle}" -->
+<!-- 										itemLabel="#{parcelle.libelleParcelle}"/> -->
+<!-- 							</b:selectOneMenu> -->
+<!-- 						</b:column> -->
+<!-- 						<b:column span="6"> -->
+<!-- 							<b:inputText -->
+<!-- 							id="txtIntituleTache" -->
+<!-- 							label="Intitulé de la tâche" -->
+<!-- 							value="#{mbEditerTache.selectedEvent.description}"/> -->
+<!-- 						</b:column> -->
+<!-- 					</b:row> -->
+					
+<!-- 					<b:row> -->
+<!-- 					<b:column span="2" offset="1"> -->
+<!-- 						<b:selectOneMenu value="#{mbEditerTache.planteTache.libellePlante}" -->
+<!-- 							id="ddlPlante" label="Plante" auto-update="true"> -->
+<!-- 							<f:selectItems value="#{mbEditerTache.plantes}" -->
+<!-- 										var="plante" -->
+<!-- 										itemValue="#{plante.libellePlante}" -->
+<!-- 										itemLabel="#{plante.libellePlante}" -->
+								
+<!-- 								/> -->
+							
+<!-- 						</b:selectOneMenu> -->
+<!-- 					</b:column> -->
+<!-- 					<b:column span="3" offset="2"> -->
+<!-- 						<b:dateTimePicker -->
+<!-- 							id="dateDebutTache" -->
+<!-- 							label="Début" -->
+<!-- 							value="#{mbEditerTache.selectedEvent.startDate}" -->
+<!-- 							format="YYYY-MM-DD hh:mm" -->
+<!-- 							placeholder="Date de la tâche" -->
+<!-- 							icon-position="right" -->
+<!-- 							side-by-side="true" -->
+<!-- 							show-date="true" show-time="true" show-icon="true" -->
+<!-- 							/> -->
+<!-- 					</b:column> -->
+<!-- <<<<<<< HEAD -->
+<!-- 					<b:column offset="3"> -->
+<!-- 						<b:commandButton style="width: 150px;" icon-awesome="fa-mail-forward" style-class="commandButton" value="Reporter"/> -->
+<!-- ======= -->
+<!-- 					<b:column span="3" offset="2"> -->
+<!-- 						<b:dateTimePicker -->
+<!-- 							id="dateTache" -->
+<!-- 							label="Fin" -->
+<!-- 							value="#{mbEditerTache.selectedEvent.endDate}" -->
+<!-- 							format="YYYY-MM-DD hh:mm" -->
+<!-- 							icon-position="right" -->
+<!-- 							side-by-side="true" -->
+<!-- 							show-date="true" show-time="true" show-icon="true" -->
+<!-- 							/> -->
+<!-- 					</b:column> -->
+<!-- 					<b:column> -->
+<!-- 						<b:commandButton value="Reporter" action="#{mbEditerTache.reporterTache()}"/> -->
+<!-- >>>>>>> branch 'master' of https://gitlab.com/axelkatz/p3_g1_jardeen.git -->
+<!-- 					</b:column> -->
+<!-- 					<b:column> -->
+<!-- 						<b:selectOneMenu value="#{mbEditerTache.actionTache.libelleAction}" -->
+<!-- 							label="Action" id="ddlAction"> -->
+<!-- 							<f:selectItems -->
+<!-- 								value="#{mbEditerTache.actions}" -->
+<!-- 								var="action" -->
+<!-- 								itemValue="#{action}" -->
+<!-- 								itemLabel="#{action.libelleAction}" -->
+<!-- 								/> -->
+<!-- 						</b:selectOneMenu> -->
+<!-- 					</b:column> -->
+					
+<!-- 				</b:row> -->
+<!-- 				<b:row> -->
+<!-- 					<b:column span="2" offset="1"> -->
+<!-- 						<b:selectOneMenu value="#{mbEditerTache.competenceTache.libelleCompetence}" -->
+<!-- 							id="ddlCompetence" -->
+<!-- 							label="Compétence"> -->
+<!-- 							<f:selectItems -->
+<!-- 								value="#{mbEditerTache.competences}" -->
+<!-- 								var="competence" -->
+<!-- 								itemValue="#{competence}" -->
+<!-- 								itemLabel="#{competence.libelleCompetence}" -->
+<!-- 								/> -->
+<!-- 						</b:selectOneMenu> -->
+<!-- 					</b:column> -->
+					
+<!-- 					<b:column span="2" offset="1"> -->
+<!-- 							<b:inputText -->
+<!-- 							id="nbrAdherentRequis" -->
+<!-- 							label="Nbre adherents requis" -->
+<!-- 							value="#{mbEditerTache.nbAdherentRequis}"/> -->
+<!-- 					</b:column> -->
+					
+<!-- 					<b:column span="2" offset="1"> -->
+<!-- 							<b:dataTable id="ddlAdherents" label="Adherents affectés"  -->
+<!-- 									value="#{mbEditerTache.adherentsAffectes}" info="false" -->
+<!-- 									var="adherent" searching="false" paginated="false"> -->
+<!-- 								<b:dataTableColumn label= "Prénom" value="#{adherent.prenom}" /> -->
+<!-- 								<b:dataTableColumn label= "Nom" value="#{adherent.nomNaissance}" /> -->
+<!-- 								<b:dataTableColumn> -->
+<!-- 									<b:commandButton value="Desaffecter" icon="edit" label="" -->
+<!-- 													 action="#{mbEditerTache.desaffecterAdherent(adherent)}" /> -->
+<!-- 								</b:dataTableColumn> -->
+<!-- 							</b:dataTable> -->
+							
+							
+							
+<!-- 					</b:column> -->
+<!-- 					<b:column> -->
+<!-- 							<b:dataTable searching="false" paginated="false" info="false" -->
+<!-- 										value="#{mbEditerTache.adherentsDisponibles}" -->
+<!-- 									    var="adherent" selectionMode="single" > -->
+<!-- 								<b:dataTableColumn label= "Prénom" value="#{adherent.prenom}" style="#{mbEditerTache.marquerAdherentsVolontare(adherent)}"/> -->
+<!-- 								<b:dataTableColumn label= "Nom" value="#{adherent.nomNaissance}" style="#{mbEditerTache.marquerAdherentsVolontare(adherent)}"/> -->
+<!-- 								<b:dataTableColumn label= "Niveau de compétence" value="#{adherent.competence.libelleCompetence}" style="#{mbEditerTache.marquerAdherentsVolontare(adherent)}"/> -->
+<!-- 								<b:dataTableColumn style="#{mbEditerTache.marquerAdherentsVolontare(adherent)}"> -->
+<!-- 									<b:commandButton value="Affecter" icon="edit" label="" action="#{mbEditerTache.affecterAdherent(adherent.idAdherent)}"  /> -->
+<!-- 								</b:dataTableColumn> -->
+<!-- 							</b:dataTable> -->
+						
+						
+<!-- 					</b:column> -->
+					
+<!-- 				</b:row> -->
+<!-- 					</b:panel> -->
+<!-- 			<b:commandButton value="Modifier" icon="edit" action="#{mbEditerTache.modifierTache()}"/> -->
+<!-- 			</b:form> -->
+		
+<!-- 		</ui:define> -->
+<!-- 	</ui:composition> -->
+<!-- </html> -->

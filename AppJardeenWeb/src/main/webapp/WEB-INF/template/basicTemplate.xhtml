@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui">
+<head>
+<title>bonjourTemplate</title>
+<!-- 	Ajouter des css&scripts à nos pages -->
+<h:outputStylesheet library="css" name="bootstrap.css" />
+<h:outputStylesheet library="css" name="bootstrap-theme.css" />
+
+</head>
+<h:body>
+	<!-- 	La div avec le id= page, Represente le titre <h1> par default à chaque vue -->
+	<div id="page">
+		<ui:insert name="header">
+			<b:container fluid="true">
+				<ui:include src="/WEB-INF/template/header.xhtml">
+				</ui:include>
+			</b:container>
+		</ui:insert>
+	</div>
+	<!-- 	La div avec le id= content, Represente le contenu spécifique à chaque vue -->
+
+	<div id="content">
+		<b:container fluid="true">
+			<ui:insert name="content"></ui:insert>
+		</b:container>
+	</div>
+	<!-- 	La div avec le id=footer, Represente le contenu spécifique au pied de page par défault -->
+	<div id="footer">
+		<ui:insert name="footer">
+			<b:container fluid="true">
+				<ui:include src="/WEB-INF/template/footer.xhtml">
+				</ui:include>
+			</b:container>
+		</ui:insert>
+	</div>
+</h:body>
+</html>

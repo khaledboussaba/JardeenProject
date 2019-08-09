@@ -1,0 +1,199 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui">
+
+<ui:composition template="/masterArche.xhtml">
+	<ui:define name="title">Accueil Visiteur</ui:define>
+	<script src="./resources/js/testPage.js" type="text/javascript"></script>
+	<ui:define name="head">
+		<h:outputStylesheet name="css/flipCard.css"  />
+		<h:outputStylesheet name="css/PoliceTelecharger.css"/>
+	</ui:define>
+	<ui:define name="script">
+		<script src="./resources/js/testPage.js" type="text/javascript"></script>
+	</ui:define>
+	<ui:define name="navbar">
+		<b:container>
+			<b:navBar brandImg="resources/pictures/leaf65_30px.png"
+				brand="Jardeen" fluid="false" inverse="true" position="top"
+				sticky="true"
+				style="	margin: 0;
+    					padding: 3px 3px 10px;
+    					text-align: center;
+						-moz-box-shadow: 8px 8px 12px #aaa; 
+  						-webkit-box-shadow: 8px 8px 12px #aaa; 
+  						box-shadow: 8px 8px 12px #555; 
+						filter:progid:DXImageTransform.Microsoft.Glow(Color=#c0c0c0,Strength=8)">
+			<b:navbarLinks
+			style="
+			margin: 0;
+    		padding: 5px 0px 0px;
+   	 		text-align: center">
+					<b:navLink
+						value="Accueil"
+						icon-awesome="home"
+						href="accueilVisiteur.xhtml"
+						/>
+					<b:navLink
+						value="Inscription"
+						icon-awesome="fa-pencil"
+						href="enregistrementAdherent.xhtml"
+						/>
+					<b:navLink value="Contact" icon-awesome="fa-bullhorn "
+						href="contact.xhtml"
+						/>
+					<b:navLink
+						value="Connexion"
+						icon-awesome="fa-chain"
+						href="identification.xhtml"
+						style="position: relaive; left: 300px;"
+						/>
+				</b:navbarLinks>
+			</b:navBar>
+		</b:container>
+	</ui:define>
+	<ui:define name="contentCore">
+		<b:form >
+				<b:row style="margin-top:30px">
+					<b:column >
+						<b:carousel id="tiovivo" style="width: 100%" interval="2500">
+							<b:carouselItem caption="Les Jardins partagés">
+								<img src="./resources/pictures/jardin-partage-burck-merignac.png" alt="Vegetal"
+									style="width:  100%; height: 500px" />
+							</b:carouselItem>
+							<b:carouselItem caption="Nos terrains">
+								<img src="./resources/pictures/SelEpsomPotager-1-1200x600.jpg" alt="Vegetal" 
+									style="width:  100%; height: 500px"/>
+							</b:carouselItem>
+							<b:carouselItem  caption="Les plantes cultivées">
+								<img src="./resources/pictures/cultiver-en-interieur.jpg" alt="Vegetal"
+									style="width:  100%; height: 500px" />
+							</b:carouselItem>
+							<b:carouselItem caption="Les outils">
+								<img src="./resources/pictures/outiljardin.jpg" alt="Jardeen"
+									style="width: 100%; height: 500px" />
+							</b:carouselItem>
+						</b:carousel>
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column span="6" offset="3">
+						<h1 style="text-align:center;">Bienvenue sur le site de l'association Jardeen</h1>
+					</b:column>
+				</b:row>
+				<b:row>
+					
+					<h3 class="ml3">Notre histoire</h3>
+					<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+					<p>L'association Jardeen assure
+						un service de qualité pour venir en aide à ces adhérents dans les
+						agglomérations situées en Ile de France. Créée à l’initiative
+						d’une personne amoureux des plantes, et de sa famille,
+						l'association a conservée tout son bagoux pour les plantes, et sa culture du partage.
+						Ses adhérants sont passionnés et chaleureux, ils ont le sens des resposabilités et sont
+						toujours sociable avec tous les adhérents. Tous font preuve d’empathie envers les personnes
+						qu’ils assistent et sont rigoureux dans l’exercice divertissant et
+						revigorant qui est le jardeenage, en jardin partagé.</p>
+
+					<p>Le service rendus par l'association Jardeen, au collectivité
+						locale à été victime de son succès ( l'échange le partage et
+						l'amitié on soudé plus d'une relation dans nos petit jardin). Il
+						c'est étendus et couvrent désormais toute l'ile de France grace a
+						son application</p>
+					<h3>Comment prendre part aux activités du jardin ?</h3>
+
+					<p>Lorsqu’une personne souhaite nous rejoindre dans un des
+						jardin partagé, elle doit contacter un gestionnaire de
+						l'association du jardin partagé souhaité. Les coordonnées des
+						gestionnaires de jardins partagés sont indiquées ci-dessous.</p>
+				</b:row>
+				<b:formGroup>
+			<b:row>
+							<h3 style="text-align:center">Nos meilleurs Jardeeniers de l'année</h3>
+					<br/>
+				<b:column span="4" offset="1">
+				<div class="flip-card">
+					<div class="flip-card-inner">
+						<div class="flip-card-front">
+							<img src="./resources/pictures/img_avatar.png" alt="Avatar"
+								style="width: 150px; height: 150px" />
+						</div>
+						<div class="flip-card-back" style="background-color: forestGreen;">
+							<h1 style="margin-left:10px !important;">Khaled</h1>
+							<p>Engineer</p>
+							<p>We love that guy</p>
+						</div>
+					</div>
+				</div>
+			</b:column>
+			<b:column span="4">
+				<div class="flip-card">
+					<div class="flip-card-inner">
+						<div class="flip-card-front">
+							<img src="./resources/pictures/img_avatar.png" alt="Avatar"
+								style="width: 150px; height: 150px" />
+						</div>
+						<div class="flip-card-back" style="background-color: blue;">
+							<h1 style="margin-left:10px !important;">Axel</h1>
+							<p>Libraire</p>
+							<p>We love that guy</p>
+						</div>
+					</div>
+				</div>
+			</b:column>
+			<b:column span="3">
+				<div class="flip-card">
+					<div class="flip-card-inner">
+						<div class="flip-card-front">
+							<img src="./resources/pictures/img_avatar.png" alt="Avatar"
+								style="width: 150px; height: 150px" />
+						</div>
+						<div class="flip-card-back" style="background-color: red;">
+							<h1 style="margin-left:10px !important;">Reda</h1>
+							<p>Engineer</p>
+							<p>We love that guy</p>
+						</div>
+					</div>
+				</div>
+			</b:column>
+		</b:row>
+		<b:row>
+			<b:column span="4" offset="3">
+				<div class="flip-card">
+					<div class="flip-card-inner">
+						<div class="flip-card-front">
+							<img src="./resources/pictures/img_avatar2.png" alt="Avatar"
+								style="width: 150px; height: 150px" />
+						</div>
+						<div class="flip-card-back" style="background-color: dodgerblue;">
+							<h1 style="margin-left:10px !important;">Meryem</h1>
+							<p>Informaticien</p>
+							<p>We love that girl</p>
+						</div>
+					</div>
+				</div>
+			</b:column>
+			<b:column span="4">
+				<div class="flip-card">
+					<div class="flip-card-inner">
+						<div class="flip-card-front">
+							<img src="./resources/pictures/img_avatar.png" alt="Avatar"
+								style="width: 150px; height: 150px" />
+						</div>
+						<div class="flip-card-back" style="background-color: purple;">
+							<h1 style="margin-left:10px !important;">Arthur</h1>
+							<p>Informaticien</p>
+							<p>We love that guy</p>
+							</div>
+						</div>
+					</div>
+				</b:column>
+			</b:row>
+			</b:formGroup>
+		</b:form>
+	</ui:define>
+</ui:composition>
+</html>

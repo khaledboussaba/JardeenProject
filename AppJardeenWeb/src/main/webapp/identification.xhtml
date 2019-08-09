@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="/masterArche.xhtml">
+	<ui:define name="title">Connexion</ui:define>
+	<ui:define name="head">
+		<h:outputStylesheet name="css/masterArche.css" />
+		<meta name="author" content="Arthur BALAY"></meta>
+		<style type="text/css">
+.form-signin {
+	margin: 0 auto;
+	max-width: 400px;
+	padding: 15px;
+	background-color: ForestGreen;
+	background-image: linear-gradient(to top right, ForestGreen, #ADFF2F);
+	padding: 50px;
+	padding-top: 20px;
+	border-radius: 30px;
+	-moz-box-shadow: 8px 8px 12px #aaa;
+	-webkit-box-shadow: 8px 8px 12px #aaa;
+	box-shadow: 8px 8px 12px #555;
+	filter: progid:DXImageTransform.Microsoft.Glow(Color=#c0c0c0, Strength=8);
+}
+</style>
+	</ui:define>
+	<ui:define name="navbar">
+		<b:container>
+			<b:navBar brandImg="resources/pictures/leaf65_30px.png"
+				brand="Jardeen" fluid="false" inverse="true" position="top"
+				sticky="true"
+				style="
+	margin: 0;
+    padding: 3px 3px 10px;
+    text-align: center;
+	-moz-box-shadow: 8px 8px 12px #aaa; 
+  	-webkit-box-shadow: 8px 8px 12px #aaa; 
+  	box-shadow: 8px 8px 12px #555; 
+	filter:progid:DXImageTransform.Microsoft.Glow(Color=#c0c0c0,Strength=8)">
+
+				<b:navbarLinks
+			style="
+			margin: 0;
+    		padding: 5px 0px 0px;
+   	 		text-align: center">
+					<b:navLink
+						value="Accueil"
+						icon-awesome="home"
+						href="accueilVisiteur.xhtml"
+						/>
+					<b:navLink
+						value="Inscription"
+						icon-awesome="fa-pencil"
+						href="enregistrementAdherent.xhtml"
+						/>
+					<b:navLink value="Contact" icon-awesome="fa-bullhorn "
+						href="contact.xhtml"
+						/>
+					<b:navLink
+						value="Connexion"
+						icon-awesome="fa-chain"
+						href="identification.xhtml"
+						style="position: relaive; left: 300px;"
+						/>
+				</b:navbarLinks>
+			</b:navBar>
+		</b:container>
+	</ui:define>
+	<ui:define name="contentCore">
+	<b:row style="position: relative; top: 100px;">
+							<b:column span="6" offset="3">
+								<h2>Identification</h2>
+								<hr></hr>
+							</b:column>
+						</b:row>
+		<b:container>
+			<b:panel id="panInfosTache" rendered="true"
+				style-class="pannel2"
+				style="margin-top: 100px; margin-left: 230px; width: 600px">
+				<h:form>
+					
+				<div class="sign" >
+					
+					<b:inputText id="email" placeholder="Login"
+						value="#{mbConnect.login}">
+						<f:facet name="prepend" >
+							<b:icon name="user" />
+						</f:facet>
+					</b:inputText>
+					<b:inputText id="password" placeholder="Password "
+						value="#{mbConnect.password}" type="password">
+						<f:facet name="prepend">
+							<b:iconAwesome name="key" />
+						</f:facet>
+					</b:inputText>
+					<b:selectBooleanCheckbox value="false" caption="Se souvenir de moi" />
+					<b:commandButton look="primary btn-block" value="Connexion"
+						action="#{mbConnect.connect()}" icon="log-in" size="lg" style="margin-bottom:20px; background-color: #3E3F3A" />
+					<b:navLink
+						href="http://localhost:8082/AppJardeenWeb/enregistrementAdherent.xhtml"
+						value="Enregistrez vous !" icon="globe" iconAlign="right" style="color: #3E3F3A!important" />
+				</div>
+				</h:form>
+			</b:panel>
+		</b:container>
+	</ui:define>
+</ui:composition>
+</html>

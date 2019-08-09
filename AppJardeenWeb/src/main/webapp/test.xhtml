@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<h:body>
+<h:form>
+  <b:shake onshake="alert('shaken!');"/>
+  <b:messages />
+</h:form>
+	<b:form>
+		<b:commandButton value="AffectationJardeenierTache" action="#{mbTest.affectationJardeenierTache()}"></b:commandButton>
+		<b:commandButton value="DesaffectationJardeenierTache" action="#{mbTest.desaffectationJardeenierTache()}"></b:commandButton>		
+		<b:commandButton value="Annuler Tache" action="#{mbTest.annulerTache()}"></b:commandButton>		
+		<b:commandButton value="Reporter Tache" action="#{mbTest.reporterTache()}"></b:commandButton>		
+	</b:form>
+	
+</h:body>
+</html>
+

@@ -1,0 +1,88 @@
+/*********CSS Planning*********/
+.fc-time{
+    display:none;
+}
+
+.fc-slats .ui-widget-content {
+    display: block;
+}
+
+/* .fc-event, .fc-event:hover, .ui-widget .fc-event .home {
+background-color: #F7D100 !important;
+} */
+
+.couleur1{
+	background-color: red !important;
+}
+.couleur2{
+	background-color: green !important;
+}
+.couleur3{
+	background-color: #0000ff !important;
+}
+.couleur4{
+	background-color: #ff0080 !important;
+}
+.couleur5{
+	background-color: #ff80c0 !important;
+}
+.couleur6{
+	background-color: #408080 !important;
+}
+.couleur7{
+	background-color: #ff00ff !important;
+}
+.couleur8{
+	background-color: #80ff80 !important;
+}
+.couleur9{
+	background-color: #ff8000 !important;
+}
+.couleur10{
+	background-color: #408080 !important;
+}
+.couleur11{
+	background-color: #ff0080 !important;
+}
+.couleur12{
+	background-color: #808000 !important;
+}
+.couleur13{
+	background-color: #00ffff !important;
+}
+.couleur14{
+	background-color: #0080ff !important;
+}
+.couleur15{
+	background-color: #8080ff !important;
+}
+.couleur16{
+	background-color: #008000 !important;
+}
+.couleur17{
+	background-color: #800080 !important;
+}
+
+.monPlanning {
+	position: relative;
+    top: 50px;
+}
+
+/*titre tache*/
+.fc-title{
+	font-size: medium;
+}
+
+/*numéro de jour  */
+.fc-ltr .fc-basic-view .fc-day-number {
+    text-align: right;
+    font-size: x-large;
+}
+/* evenements (taches)*/
+.fc-day-grid-event > .fc-content {
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 20px;
+}
+
+/*********Fin CSS Planning*********/

@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<ui:composition template="/masterArche.xhtml">
+	<ui:define name="title">Bibliothèque des Plantes </ui:define>
+		<ui:define name="head">
+		<f:metadata>
+			<f:event listener="#{mbOrdoActionsPlante.init()}" type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+	<ui:define name="contentCore">
+		<h2>Les actions associées à la plante : #{mbOrdoActionsPlante.plante.libellePlante}</h2>
+		<hr></hr>
+	<b:panel styleClass="pannelFormulaireTache">
+		<b:form inline="true" id="totoForm" >
+			<b:dataTable value="1" var="1" responsive="true" searching="false" info="false" >
+				<b:dataTableColumn label="Actions Disponibles">
+					<b:selectOneMenu id="ddlActionDispo" value="#{mbOrdoActionsPlante.newActionsPlante.action}" span="2" offset="1" >
+						<f:selectItems 	value="#{mbOrdoActionsPlante.allActions}" var="action"
+										itemValue="#{action}" itemLabel="#{action.libelleAction}"
+						/>
+					</b:selectOneMenu>				
+				</b:dataTableColumn>
+				<b:dataTableColumn value="#{plante.libellePlante}" label="Rang">
+					<b:touchSpin id="tsNbOrdo" min="1"  step="1" value="#{mbOrdoActionsPlante.newActionsPlante.numOrdonnancement}"
+							inline="true"  span="1" />
+				</b:dataTableColumn>
+				<b:dataTableColumn label="">
+				 	<b:commandButton value="Associer" icon-awesome="fa-chain" action="#{mbOrdoActionsPlante.affecterActionPlante()}">
+					</b:commandButton>
+				</b:dataTableColumn>
+			</b:dataTable>	
+			
+			<h3> Les actions déjà associées :</h3>
+			<hr></hr>
+			
+			<b:dataTable id="totoTableau" value="#{mbOrdoActionsPlante.actionsPlanteDejaAffectees}" var="ap" responsive="true">
+				<b:dataTableColumn value="#{ap.action.libelleAction}" label="Actions affectées" />
+				<b:dataTableColumn value="#{ap.numOrdonnancement}" label="Ordre"/>
+				<b:dataTableColumn label="">
+				 	<b:commandButton value="Supprimer" icon="trash" action="#{mbOrdoActionsPlante.supprimerActionPlante(ap.idActionsPlante)}" />				
+				</b:dataTableColumn>
+		
+			</b:dataTable>
+			<b:commandButton style-class="commandButton" icon-awesome="fa-mail-reply" value="Retour" action="plantes.xhtml"/>
+	</b:form>
+	</b:panel>
+	</ui:define>
+</ui:composition>
+</html>

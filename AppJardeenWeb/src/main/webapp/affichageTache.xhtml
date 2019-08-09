@@ -1,0 +1,264 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+	<ui:composition template="/masterArche.xhtml">
+		<ui:define name="head">
+		</ui:define>
+		<ui:define name="title">Fiche Tâche</ui:define>
+		<ui:define name="contentCore">
+			<b:form>
+			<b:panel id="panInfosTache" rendered="true"  style-class="pannelFormulaireTache">
+			<h2 style="margin: 30px">Fiche tâche</h2>
+				<b:row>
+					<b:column span="2" offset="1">
+					  <h:outputLabel value="Terrain :" />
+					  <h:outputLabel value="Nom :" />
+					</b:column>
+					<b:column span="8">
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column span="2" offset="1">
+					</b:column>
+					<b:column span="3" offset="2">
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column span="2" offset="1">
+					</b:column>
+					<b:column span="3" offset="2">
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column span="2" offset="1">
+					</b:column>
+					<b:column span="3" offset="2">
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column span="2" offset="1">
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column span="3" offset="8" style="position: relative; bottom: 15px">
+					</b:column>
+				</b:row>
+			</b:panel>
+				<b:row>
+					<b:column style="margin: 30px;">
+						<h3>Liste des jardiniers Affectés</h3>
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column span="5" style-class="pannelFormulaireTache">
+						<b:dataTable
+							id="dataTableDisponibles"
+							value="#{mbFormulaireTache.adherentsDisponibles}"
+							caption="-La liste des jardiniers disponibles et compétents -"
+							var="adherentDisponible"
+							select="true"
+							onselect="ajax:mbFormulaireTache.selectionnerAdherentDisponible(indexes)"
+							ondeselect="ajax:mbFormulaireTache.deselectionnerAdherentDisponible(indexes)"
+							ajax="true"
+							searching="false"
+							info="false"
+							responsive="true"
+							>
+							<b:dataTableColumn
+								value="#{adherentDisponible.nomNaissance}"
+								label="Nom"
+								_order="asc"
+								width="50%"
+								/>
+							<b:dataTableColumn
+								value="#{adherentDisponible.prenom}"
+								label="Prénom"
+								/>
+						</b:dataTable>
+					</b:column>
+					<b:column span="2" style="text-align: center; position: relative; top: 100px;">
+						<b:row>
+							<b:commandButton
+								id="btnDisponiblesVersAffectes"
+								iconAwesome="angle-double-right"
+								style-class="boutonFormulaireTache"
+								>
+								<f:ajax
+									render="dataTableDisponibles dataTableAffectes"
+									listener="#{mbFormulaireTache.validerSelectionDisponibles()}"
+									/>
+							</b:commandButton>
+						</b:row>
+						<b:row>
+							<b:commandButton
+								id="btnAffectesVersDisponibles"
+								iconAwesome="angle-double-left"
+								style-class="boutonFormulaireTache"
+								>
+								<f:ajax
+									render="dataTableDisponibles dataTableAffectes"
+									listener="#{mbFormulaireTache.validerSelectionAffectes()}"
+									/>
+							</b:commandButton>
+						</b:row>
+					</b:column>
+					<b:column span="5" style-class="pannelFormulaireTache">
+						<b:dataTable
+							id="dataTableAffectes"
+							value="#{mbFormulaireTache.adherentsAffectes}"
+							caption="- La liste des jardiniers disponibles affectés -"
+							var="adherentAffecte"
+							select="true"
+							onselect="ajax:mbFormulaireTache.selectionnerAdherentAffecte(indexes)"
+							ondeselect="ajax:mbFormulaireTache.deselectionnerAdherentAffecte(indexes)"
+							ajax="true"
+							searching="false"
+							info="false"
+							responsive="true"
+							>
+							<b:dataTableColumn
+								value="#{adherentAffecte.nomNaissance}"
+								label="Nom"
+								_order="asc"
+								width="50%"
+								/>
+							<b:dataTableColumn
+								value="#{adherentAffecte.prenom}"
+								label="Prénom"
+								/>
+						</b:dataTable>
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column style="margin: 30px;">
+						<h3>Liste des outils</h3>
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column span="4" style-class="pannelFormulaireTache">
+						<b:dataTable
+							id="dataTableOutilsDisponibles"
+							value="#{mbFormulaireTache.outilsDisponibles}"
+							caption="- La liste des outils disponibles -"
+							var="outilDisponible"
+							select="true"
+							onselect="ajax:mbFormulaireTache.selectionnerOutilDisponible(indexes)"
+							ondeselect="ajax:mbFormulaireTache.deselectionnerOutilDisponible(indexes)"
+							ajax="true"
+							searching="false"
+							info="false"
+							responsive="true"
+							>
+							<b:dataTableColumn
+								value="#{outilDisponible.libelleOutil}"
+								label="Outil"
+								width="50%"
+								/>
+							<b:dataTableColumn
+								value="#{outilDisponible.quantiteOutilTotale}"
+								label="Quantité disponible"
+								/>
+						</b:dataTable>
+					</b:column>
+					<b:column span="1"  style="text-align: center; position: relative; top: 100px;">
+						<b:row>
+							<b:commandButton
+								id="btnOutilsDisponiblesVersAffectes"
+								iconAwesome="angle-double-right"
+								style-class="boutonFormulaireTache"
+								offset="4"
+								>
+								<f:ajax
+									render="dataTableOutilsDisponibles dataTableOutilsAffectes dataTableQuantitesOutilAllouees"
+									listener="#{mbFormulaireTache.validerSelectionOutilsDisponibles()}"
+									/>
+							</b:commandButton>
+						</b:row>
+						<b:row>
+							<b:commandButton
+								id="btnOutilsAffectesVersDisponibles"
+								iconAwesome="angle-double-left"
+								style-class="boutonFormulaireTache"
+								offset="4"
+								>
+								<f:ajax
+									render="dataTableOutilsDisponibles dataTableOutilsAffectes dataTableQuantitesOutilAllouees"
+									listener="#{mbFormulaireTache.validerSelectionOutilsAffectes()}"
+									/>
+							</b:commandButton>
+						</b:row>
+					</b:column>
+					<b:column
+						style-class="pannelFormulaireTache"
+						style="margin-left: 0; margin-right: 0;"
+						span="5"
+						>
+					<b:column span="6">
+						<b:dataTable
+							id="dataTableOutilsAffectes"
+							value="#{mbFormulaireTache.outilsAffectes}"
+							caption="La liste des outils affectés"
+							var="outilAffecte"
+							select="true"
+							onselect="ajax:mbFormulaireTache.selectionnerOutilAffecte(indexes)"
+							ondeselect="ajax:mbFormulaireTache.deselectionnerOutilAffecte(indexes)"
+							ajax="true"
+							searching="false"
+							info="false"
+							responsive="true"
+							paginated="false"
+							>
+							<b:dataTableColumn
+								value="#{outilAffecte.libelleOutil}"
+								label="Outil"
+								width="50%"
+								/>
+							<b:dataTableColumn
+								value="#{outilAffecte.quantiteOutilTotale}"
+								label="Quantite disponible"
+								style="height: 46px;"
+								/>
+						</b:dataTable>
+					</b:column>
+					<b:column span="1" offset="2" style="position: relative; top: 25px;">
+						<b:dataTable
+							id="dataTableQuantitesOutilAllouees"
+							caption=""
+							value="#{mbFormulaireTache.quantitesOutilsUtilises}"
+							var="outilAffecte"
+							searching="false"
+							info="false"
+							responsive="true"
+							paginated="false"
+							>
+							<b:dataTableColumn
+								label="Quantite Allouée"
+								>
+								<b:touchSpin
+									id="tsQuantiteOutilAllouee"
+									value="#{outilAffecte.quantiteAllouee}"
+									min="0" max="#{outilAffecte.quantiteOutilTotale}" step="1"
+									initval="0"
+									/>
+							</b:dataTableColumn>
+						</b:dataTable>
+					</b:column>
+					</b:column>
+				</b:row>
+				<b:row style-class="boutonFormulaireTache">
+					<b:commandButton
+						id="btnCreerTache"
+						value="Créer la tâche"
+						action="#{mbFormulaireTache.creerTache()}"
+						span="4" offset="4"
+						/>
+				</b:row>
+			</b:form>
+		</ui:define>
+	</ui:composition>
+</html>

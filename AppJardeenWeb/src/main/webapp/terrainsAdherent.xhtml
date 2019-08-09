@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+	<ui:composition template="/masterArche.xhtml">
+		<ui:define name="head">
+			<f:metadata>
+				<f:event listener="#{mbTerrainsAdherent.init()}" type="preRenderView"></f:event>
+			</f:metadata>
+		</ui:define>
+		<ui:define name="title">Formulaire parcelle
+			<h:outputStylesheet name="css/masterArche.css" />
+		</ui:define>
+	<ui:define name="contentCore">
+	<h2>Mes terrains favoris</h2>
+	<hr></hr>
+	  <b:form>
+	  	<b:panel styleClass="pannelFormulaireTache">
+	  		<b:dataTable value="#{mbTerrainsAdherent.terrainsFavoris}"
+				var="terrainFav" selectionMode="single" responsive="true" >
+				<b:dataTableColumn
+					value="#{terrainFav.terrain.libelleTerrain}"
+					label="Terrain" />
+				<b:dataTableColumn
+					label="Adresse"
+					value="#{terrainFav.terrain.adresse.libelleAdresse} (#{terrainFav.terrain.adresse.ville.libelleVille})"
+					/>
+				<b:dataTableColumn style="text-align: center">
+					<b:commandButton
+						iconAwesome="thumbs-down"
+						label=""
+						action="#{mbTerrainsAdherent.supprimmerTerrain(terrainFav)}"
+						look="none"
+						style="
+							background-color:#3E3F3A;
+							color: white;
+							"
+						/>
+				</b:dataTableColumn>
+			</b:dataTable>
+	  
+	  
+	  		<b:commandButton
+	  			style-class="commandButton"
+	  			icon-awesome="fa-mail-reply"
+	  			value="Retour"
+	  			action="pageAdherent.xhtml"
+	  			look="none"
+				style="
+					background-color:#3E3F3A;
+					color: white;
+					"
+	  			/>
+	  		</b:panel>
+	  </b:form>
+	 </ui:define>
+	</ui:composition>
+</html>

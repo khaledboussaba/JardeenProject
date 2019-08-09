@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jstl/core" >
+
+<ui:composition template="/masterArche.xhtml">
+	<ui:define name="title">Bibliothèque des Plantes
+		</ui:define>
+	<ui:define name="contentCore">
+		<h2>Les plantes cultivées par l'association</h2>
+		<hr></hr>
+		<b:panel styleClass="pannel2">
+		<h:form>
+			<b:dataTable value="#{mbPlante.plantes}" var="plante">
+				<b:dataTableColumn label="Photo">
+					<b:image name="test" value="./resources/pictures/#{plante.photo}" />
+				</b:dataTableColumn>
+				<b:dataTableColumn value="#{plante.libellePlante}" label="Libéllé"/>
+				<b:dataTableColumn  label="Indice ">
+					<ul style="margin-bottom:0; list-style-type:none; padding-left:0">
+       					<li>Humidité : #{plante.humiditeSol.libelleHumidite}</li> 	
+       					<li>Exposition : #{plante.exposition.libelleExposition}</li> 									
+       				</ul>
+				</b:dataTableColumn>
+				<b:dataTableColumn  label="Caractéristique">
+					<ul style="margin-bottom:0; list-style-type:none; padding-left:0">
+				    	<li>Acidité : #{plante.acidite.indiceAcidite}</li>
+				   		<li>Besoin en Eau : #{plante.besoinEau.indiceBesoinEau}</li>
+       					<li>Ruticité : #{plante.rusticite.indiceRusticite}</li> 					
+       				</ul>
+				</b:dataTableColumn>
+				<b:dataTableColumn label="Période">
+        				<ul style="margin-bottom:0; list-style-type:none; padding-left:0">
+				    		<li>Semis : de #{plante.debutSemis.libelleMois} à #{plante.finSemis.libelleMois}</li>
+				          	<li>Floraison : de #{plante.debutFloraison.libelleMois} à #{plante.finFloraison.libelleMois}</li>
+       						<li>Recolte : de #{plante.debutRecolte.libelleMois} à #{plante.finRecolte.libelleMois}</li> 					
+       					</ul>
+				</b:dataTableColumn>
+				<b:dataTableColumn label="">
+				 	<b:commandButton  iconAwesome="search" value="Voir les taches" action ="#{mbPlante.afficherTache(plante)}" />
+				</b:dataTableColumn>
+				 
+				<b:dataTableColumn label="" rendered="#{mbaffichAdherent.affichage}">
+				<!-- methode select plant action  associé by id plante -->
+				 	<b:commandButton  iconAwesome="search" action ="#{mbPlante.editPlante(plante)}" 
+				 					   value="Actions Associées" />
+				</b:dataTableColumn>
+			</b:dataTable>
+		</h:form>
+		</b:panel>
+	</ui:define>
+	
+</ui:composition>
+</html>

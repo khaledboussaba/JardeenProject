@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+	<ui:composition template="/masterArche.xhtml">
+		<ui:define name="head">
+			<f:metadata>
+				<f:event listener="#{mbaffichAdherent.init()}" type="preRenderView"></f:event>
+			</f:metadata>
+		</ui:define>
+		<ui:define name="title">Formulaire indisponibilité
+			<h:outputStylesheet name="css/masterArche.css" />
+		</ui:define>
+		<ui:define name="contentCore">
+			<h2>Ajouter une période d'indisponibilité</h2>
+			<hr></hr>
+			<b:panel styleClass="pannelFormulaireTache">
+				<b:form>
+					<h4>Début : <b:dateTimePicker value="#{mbIndisponibilite.dateDebutIndispo}" show-icon="true" show-time="true" /></h4>
+					<h4>Fin : <b:dateTimePicker  value="#{mbIndisponibilite.dateFinIndispo}" mode="icon-toggle" show-time="true" /></h4>
+					<b:commandButton style-class="commandButton" icon-awesome="fa-plus" value="Ajouter" action="#{mbIndisponibilite.addPeriodeIndispo()}"></b:commandButton>
+					<b:commandButton style-class="commandButton" icon-awesome="fa-times" value="Annuler" action="pageAdherent.xhtml"></b:commandButton>
+				</b:form>
+			</b:panel>
+		</ui:define>
+	</ui:composition>
+</html>

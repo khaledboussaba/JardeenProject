@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:composition template="/masterArche.xhtml">
+		<ui:define name="title">Formulaire adherent	</ui:define>
+		
+		<ui:define name="script">
+			<script src="./resources/js/planning.js" type="text/javascript"></script>
+		</ui:define>
+		
+		
+		<ui:define name="contentCore">
+						
+			<b:form>
+			  <h:panelGrid columnClasses="value">
+				<h2>Mon planning des Tâches</h2>
+				<hr></hr>
+				<p:schedule draggable="false" allDaySlot="false" axisFormat="H:mm" timeZone="GMT+2"
+					minTime="7:00" maxTime="19:00" locale="fr"
+					id="schedule" value="#{mbPlanningAdherent.eventModel}"
+					widgetVar="myschedule" >
+
+					<p:ajax event="eventSelect" listener="#{mbPlanningAdherent.onEventSelect}"
+						update="eventDetails" oncomplete="PF('eventDialog').show();" />
+				</p:schedule>
+			</h:panelGrid>
+			
+			<p:dialog widgetVar="eventDialog" header="Details Tâche"
+				showEffect="clip" hideEffect="clip">
+				<h:panelGrid id="eventDetails" columns="2">
+					<p:outputLabel for="title" value="Nom tâche:" />
+					<p:outputLabel id="title" value="#{mbPlanningAdherent.newEvent.description}" />
+					<p:outputLabel for="tt" value="Terrain:" />
+					<p:outputLabel id="tt" value="#{mbPlanningAdherent.newEvent.terrain.libelleTerrain}" />
+					<p:outputLabel for="from" value="Date de début:" />
+					<p:calendar id="from" value="#{mbPlanningAdherent.newEvent.startDate}"
+						timeZone="GMT+2" pattern="dd MMMM yyyy HH:mm" disabled="true" />
+
+					<p:outputLabel for="to" value="Date de fin:" />
+					<p:calendar id="to" value="#{mbPlanningAdherent.newEvent.endDate}"
+						timeZone="GMT+2" pattern="dd MMMM yyyy HH:mm" disabled="true" />
+					<p:outputLabel for="from" value="Adherents affectés:" />
+					<b:dataTable value="#{mbPlanningAdherent.newEvent.adherent}" searching="false" paginated="false"
+							var="adherent" responsive="true" info="false">
+						<b:dataTableColumn label="Nom" value="#{adherent.nomNaissance} #{adherent.prenom}"/>
+						<b:dataTableColumn label="Compétence" value="#{adherent.competence.libelleCompetence}"/>
+					</b:dataTable>
+					
+					
+					
+				</h:panelGrid>
+				
+			</p:dialog>
+			
+			<h3>Liste de mes tâches</h3>
+			<hr></hr>
+			<b:dataTable value="#{mbPlanningAdherent.tachesAdherent}"
+				var="tache" selectionMode="single" responsive="true" 
+				searching="false" paginated="false" info="false">
+				<b:dataTableColumn value="#{tache.libelleTache}"
+									label="Tâche" />
+				<b:dataTableColumn label="Date de début">
+					<h:outputLabel value="#{tache.dateDebutTache}">
+						<f:convertDateTime pattern="dd MMMM yyyy - HH" />h
+					</h:outputLabel>
+				</b:dataTableColumn>
+				<b:dataTableColumn label="Date de fin">
+					<h:outputLabel value="#{tache.dateFinTache}">
+						<f:convertDateTime pattern="dd MMMM yyyy - HH" />h
+					</h:outputLabel>
+				</b:dataTableColumn>
+				<b:dataTableColumn value="#{tache.parcelle.libelleParcelle}"
+									label="Parcelle" />
+				<b:dataTableColumn value="#{tache.plante.libellePlante}"
+									label="Plante"/>
+				<b:dataTableColumn value="#{mbPlanningAdherent.etatTache(tache)}"
+									label="Etat"/>
+								
+			</b:dataTable>
+			<b:commandButton style-class="commandButton" icon-awesome="fa-mail-reply" value="Retour" action="pageAdherent.xhtml"/>
+			
+			</b:form>
+		
+		</ui:define>
+	</ui:composition>
+</html>

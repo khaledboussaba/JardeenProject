@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="/masterArche.xhtml">
+	<ui:define name="head">
+		<f:metadata>
+			<f:event listener="#{mbaffichAdherent.init()}" type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+	<ui:define name="title">Formulaire adherent
+		<h:outputStylesheet name="css/masterArche.css" />
+	</ui:define>
+	<ui:define name="contentCore">
+		
+		<b:form>
+			<b:panel styleClass="pannelFormulaireTache">
+				  	<h1 style="margin-top: 0; text-align: center;">Création d'une parcelle</h1>
+			
+		<h:outputLabel value="Nom de parcelle :" />
+			<h:inputText value="#{mbGestionParcelles.libelleParcelle}" />
+			
+			<b:selectOneMenu required="true" label=" Type de sol :" >
+				<f:selectItems value="#{mbEditerParcelle.typesSol}" 
+						   var="typeSol" 
+					       itemValue="#{typeSol.libelleTypeSol}"
+					       itemLabel="#{typeSol.libelleTypeSol}" />
+			</b:selectOneMenu>
+
+			
+			<b:selectOneMenu required="true" label=" Terrain :">
+				<f:selectItems value="#{mbEditerParcelle.terrains}" 
+						   var="terrain" 
+					       itemValue="#{terrain.libelleTerrain}"
+					       itemLabel="#{terrain.libelleTerrain}" />
+			</b:selectOneMenu>
+			
+			<b:selectOneMenu required="true" label=" Indice acidité :" >
+				<f:selectItems value="#{mbEditerParcelle.acidites}" 
+						   var="acidite" 
+					       itemValue="#{acidite.indiceAcidite}"
+					       itemLabel="#{acidite.indiceAcidite}" />
+			</b:selectOneMenu>
+			
+			<b:dateTimePicker label="Date de création"  show-icon="true" show-time="false" />
+			
+		
+			<b:commandButton value="Retour" action="pageAdherent.xhtml"/>
+			<b:commandButton value="Ajouter" action="#{mbGestionParcelles.ajouterParcelle()}"/>
+			</b:panel>
+		</b:form>
+		
+	</ui:define>
+	</ui:composition>
+</html>

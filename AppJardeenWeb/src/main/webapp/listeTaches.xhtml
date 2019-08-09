@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+	<ui:composition template="/masterArche.xhtml">
+		<ui:define name="head">
+			<f:metadata>
+				<f:event listener="#{mbListeTaches.init()}" type="preRenderView"></f:event>
+			</f:metadata>
+		</ui:define>
+		<ui:define name="title">Liste tâches</ui:define>
+		<ui:define name="contentCore">
+		<h2>Liste des tâches</h2>
+				<hr></hr>
+			<b:form>
+			<b:panel styleClass="pannelFormulaireTache">
+				
+			<b:dataTable
+				id="form-tache"
+				value="#{mbListeTaches.taches}"
+				select="false"
+				auto-update="true"
+				var="tache"
+				>
+				<b:dataTableColumn
+					value="#{tache.libelleTache}"
+					label="Tâche" />
+				<b:dataTableColumn label="Date">
+					<h:outputLabel value="#{tache.dateDebutTache}">
+						<f:convertDateTime pattern="dd MMMM yyyy" />
+					</h:outputLabel>
+				</b:dataTableColumn>
+				<b:dataTableColumn label="Début">
+					<h:outputLabel value="#{tache.dateDebutTache}">
+						<f:convertDateTime  timeZone="GMT+2" pattern="HH" />h
+					</h:outputLabel>
+				</b:dataTableColumn>
+				<b:dataTableColumn label="Fin">
+					<h:outputLabel value="#{tache.dateFinTache}">
+						<f:convertDateTime timeZone="GMT+2" pattern="HH" />h
+					</h:outputLabel>
+				</b:dataTableColumn>
+					
+				<b:dataTableColumn value="#{tache.parcelle.libelleParcelle} (#{tache.parcelle.terrain.libelleTerrain})"
+					label="Parcelle" />
+
+				<b:dataTableColumn value="#{tache.plante.libellePlante}"
+					label="Plante" />
+				<b:dataTableColumn value="#{tache.nbAdherentRequis-tache.affectationsAdherents.size()}"
+					label="Jardiniers manquant" />
+				<b:dataTableColumn label="Editer" style="text-align: center;">
+					<b:commandButton
+						action="#{mbListeTaches.editerTache(tache)}"
+						id="btnEditerTache"
+						icon-awesome="fa-pencil"
+						look="none"
+						style="
+							background-color:#3E3F3A;
+							color: white;
+							"
+							/>
+				</b:dataTableColumn>
+				<b:dataTableColumn label="Volontaire" style="text-align: center;">
+					<b:commandButton
+						action="#{mbListeTaches.sePorterVolontaire(tache)}"
+						ajax="true"
+						auto-update="true"
+						id="btnVolontaireTache"
+						icon-awesome="#{mbListeTaches.masquerButton(tache)}"
+						look="none"
+						style="
+							background-color:#3E3F3A;
+							color: white;
+							"
+							/>
+				</b:dataTableColumn>
+			</b:dataTable>
+			<b:commandButton
+				value="Retour"
+				action="pageAdherent.xhtml"
+				icon-awesome="fa-reply"
+				look="none"
+				style="
+					background-color:#3E3F3A;
+					color: white;
+					"
+				style-class="commandButton"
+				/>
+			</b:panel>
+			</b:form>
+		</ui:define>
+	</ui:composition>
+</html>

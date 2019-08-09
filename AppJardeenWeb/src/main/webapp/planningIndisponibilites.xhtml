@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:composition template="/masterArche.xhtml">
+		<ui:define name="title">Planning des indisponibilites</ui:define>
+		
+		<ui:define name="script">
+			<script src="./resources/js/planning.js" type="text/javascript"></script>
+		</ui:define>
+		
+		<ui:define name="contentCore">
+						
+			<b:form>
+			  <h:panelGrid columnClasses="value">
+				<h2>Mon planning des Indisponibilités</h2>
+				<hr></hr>
+				<p:schedule draggable="false" allDaySlot="false" axisFormat="H:mm" timeZone="GMT+2"
+					minTime="7:00" maxTime="19:00" locale="fr"
+					id="schedule" value="#{mbPlanningIndisponibilites.eventModel}"
+					widgetVar="myschedule" >
+
+					<p:ajax event="eventSelect" listener="#{mbPlanningIndisponibilites.onEventSelect}"
+						update="eventDetails" oncomplete="PF('eventDialog').show();" />
+				</p:schedule>
+			</h:panelGrid>
+			
+			<p:dialog widgetVar="eventDialog" header="Details Tâche"
+				showEffect="clip" hideEffect="clip">
+				<h:panelGrid id="eventDetails" columns="2">
+					
+					<p:outputLabel id="title" value="#{mbPlanningIndisponibilites.event.description}" />
+
+					<p:outputLabel for="from"/>
+					<p:calendar id="from" value="#{mbPlanningIndisponibilites.event.startDate}"
+						timeZone="GMT+2" pattern="dd/MM/yyyy" disabled="true" />
+
+					<p:outputLabel for="to"/>
+					<p:calendar id="to" value="#{mbPlanningIndisponibilites.event.endDate}"
+						timeZone="GMT+2" pattern="dd/MM/yyyy" disabled="true" />
+				</h:panelGrid>
+			</p:dialog>
+			
+			<b:commandButton style-class="commandButton" icon-awesome="fa-mail-reply" value="Retour" action="pageAdherent.xhtml"/>
+			</b:form>
+		
+		</ui:define>
+	</ui:composition>
+</html>

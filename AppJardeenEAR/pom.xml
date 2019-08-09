@@ -1,0 +1,49 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>fr.afcepf.ai105.appjardeen</groupId>
+    <artifactId>AppJardeenParent</artifactId>
+    <version>1.0</version>
+  </parent>
+  <artifactId>AppJardeenEAR</artifactId>
+  <packaging>ear</packaging>
+  
+  <dependencies>
+  	<dependency>
+  		<groupId>${project.groupId}</groupId>
+  		<artifactId>AppJardeenWeb</artifactId>
+  		<version>${project.version}</version>
+  		<type>war</type>
+  	</dependency>
+  	  	<dependency>
+  		<groupId>${project.groupId}</groupId>
+  		<artifactId>AppJardeenBusinessImpl</artifactId>
+  		<version>${project.version}</version>
+  		<type>ejb</type>
+  	</dependency>
+  	  	<dependency>
+  		<groupId>${project.groupId}</groupId>
+  		<artifactId>AppJardeenBusiness</artifactId>
+  		<version>${project.version}</version>
+  		<type>jar</type>
+  	</dependency>
+  	  	<dependency>
+  		<groupId>${project.groupId}</groupId>
+  		<artifactId>AppJardeenDaoImpl</artifactId>
+  		<version>${project.version}</version>
+  		<type>ejb</type>
+  	</dependency>
+  	  	<dependency>
+  		<groupId>${project.groupId}</groupId>
+  		<artifactId>AppJardeenDao</artifactId>
+  		<version>${project.version}</version>
+  		<type>jar</type>
+  	</dependency>
+  	  	<dependency>
+  		<groupId>${project.groupId}</groupId>
+  		<artifactId>AppJardeenEntity</artifactId>
+  		<version>${project.version}</version>
+  		<type>jar</type>
+  	</dependency>
+</dependencies>
+</project>

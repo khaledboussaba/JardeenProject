@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<!-- 	Insérer dans chaque page un titre -->
+	<title><ui:insert name="title"></ui:insert></title>
+
+	<!-- Ajouter du css à nos pages -->
+	<h:outputStylesheet library="css" name="masterArche.css" />
+	<h:outputStylesheet library="css" name="bootstrap-theme.css" />
+	<h:outputStylesheet library="css" name="planningStyle.css" />
+	<ui:insert name="css"></ui:insert>
+
+	<ui:insert name="head"></ui:insert>
+	<script>
+		$.blockUI.defaults = {
+			message: null,
+			overlayCSS:  { 
+		        backgroundColor: '#000', 
+		        opacity:         0.1, 
+		        cursor:          'wait' 
+		    }, 
+		}
+	</script>
+
+</h:head>
+
+<h:body class="body">
+	
+	<div id="top"></div>
+	<ui:insert name="navbar">
+		<b:navBar brandImg="resources/pictures/leaf65_30px.png"
+			brand="Jardeen" fluid="false" inverse="true" position="top"
+			sticky="true"
+			style="
+				-moz-box-shadow: 8px 8px 12px #aaa; 
+  						-webkit-box-shadow: 8px 8px 12px #aaa; 
+  						box-shadow: 8px 8px 12px #555; 
+	margin: 0;
+    padding: 3px 3px 10px;
+    text-align: center;
+	filter:progid:DXImageTransform.Microsoft.Glow(Color=#c0c0c0,Strength=8)">
+			<b:navbarLinks
+				style="
+	margin: 0;
+    padding: 5px 0px 0px;
+    text-align: center">
+				<b:navLink value="Accueil" icon-awesome="home"
+					href="dashboard.xhtml" />
+				<b:navLink value="Mon Espace" icon-awesome="user"
+						href="pageAdherent.xhtml"/>
+				
+				<b:dropMenu value="Tâches" icon-awesome="fa-calendar">
+					<b:navLink value="Planning des tâches" href="planningTaches.xhtml" />
+					<b:navLink value="Liste des tâches" href="listeTaches.xhtml" />
+				</b:dropMenu>
+				<b:dropMenu value="Terrains" icon-awesome="fa-list">
+					<b:navLink value="Liste des terrains"
+						href="listeTerrain.xhtml" />
+					<b:navLink value="Liste des parcelles"
+						href="listeParcelles.xhtml" />
+				</b:dropMenu>
+				<b:navLink
+					value="Plantes"
+					href="plantes.xhtml"
+					icon-awesome="fa-pagelines"
+					/>
+				<b:navLink style="position: relative; left: 184px;">
+					<b:form>
+						<b:commandButton
+							value="Se déconnecter"
+							icon-awesome="fa-chain-broken"
+							action="#{mbDisconnect.disconnect()}"
+							style="
+								background-color: transparent;
+								padding: 0;								
+								vertical-align: top;
+								line-height: 1;
+								text-shadow: none;
+								font-size: 15px;
+								color: #93c54b;
+								"
+							look="none"
+							/>
+					</b:form>
+				</b:navLink>
+			</b:navbarLinks>
+
+		</b:navBar>
+		<br />
+		<br />
+		<br />
+		<br />
+	</ui:insert>
+	<!-- container bootfaces, pour le body -->
+	<b:container id="fondVerticaleBody">
+				<div class="row" style="margin:10px; ">
+				<div class="col-md-12">
+					<ui:insert name="contentCore"></ui:insert>
+				</div>
+				</div>
+	</b:container>
+	<b:navBar inverse="true" position="bottom" sticky="false">
+  		<b:navbarLinks>
+    <b:navLink  href="#"> <b:socialShare  show-count="false"
+							text="Jardeenons Ensemble!" shares="twitter,linkedin,facebook"
+							disable-block="true" /></b:navLink>
+
+  </b:navbarLinks>
+  <b:navbarLinks pull="right" style="
+	margin: 0;
+    padding: 15px 0px 0px;
+    text-align: center">
+  <b:navLink value="© Jardeeen 2019" href="accueilVisiteur.xhtml" />
+  </b:navbarLinks>
+  
+</b:navBar>
+	<!-- 	Ajouter des scripts à nos pages -->
+	<ui:insert name="script"></ui:insert>
+</h:body>
+</html>
+

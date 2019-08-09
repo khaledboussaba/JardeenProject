@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+
+<ui:composition template="/masterArche.xhtml">
+	<ui:define name="title">Formulaire indisponibilité
+		<h:outputStylesheet name="css/masterArche.css" />
+	</ui:define>
+	<ui:define name="contentCore">
+
+		<h2>Editer une indisponibilité</h2>
+		<hr></hr>
+		<b:form>
+			<b:panel styleClass="pannelFormulaireTache">
+				<h4>
+					Début :
+					<b:dateTimePicker
+						value="#{mbaffichAdherent.selectedIndispo.debutDateIndisponibilite}"
+						show-icon="true" show-time="true" />
+				</h4>
+				<h4>
+					Fin :
+					<b:dateTimePicker
+						value="#{mbaffichAdherent.selectedIndispo.finDateIndisponibilite}"
+						mode="icon-toggle" show-time="true" />
+				</h4>
+				<b:commandButton style-class="commandButton" value="Valider"
+					icon-awesome="fa-check-square-o"
+					action="#{mbIndisponibilite.UpdateIndispo()}" />
+				<b:commandButton style-class="commandButton" value="Annuler"
+					icon-awesome="fa-close" action="pageAdherent.xhtml" />
+			</b:panel>
+		</b:form>
+	</ui:define>
+</ui:composition>
+</html>

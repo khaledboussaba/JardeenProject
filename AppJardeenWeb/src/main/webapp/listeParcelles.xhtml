@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="/masterArche.xhtml">
+	<ui:define name="head">
+		<f:metadata>
+			<f:event listener="#{mbGestionParcelles.init()}" type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+	<ui:define name="title">Liste parcelles
+		<h:outputStylesheet name="css/masterArche.css" />
+	</ui:define>
+	<ui:define name="contentCore">
+	
+		<b:form>
+			<h2>Liste des Parcelles</h2>
+			<hr></hr>
+			<b:panel styleClass="pannelFormulaireTache">
+			<b:dataTable value="#{mbGestionParcelles.parcelles}"
+				var="parcelle" selectionMode="single" responsive="true" >
+				<b:dataTableColumn
+					value="#{parcelle.libelleParcelle}"
+					label="Parcelle" />
+
+				<b:dataTableColumn value="#{parcelle.terrain.libelleTerrain}"
+					label="Terrain" />
+				<b:dataTableColumn rendered="#{mbaffichAdherent.affichage}">
+					<b:commandButton value="Modifier" icon="edit" action="#{mbGestionParcelles.afficherParcelle(parcelle)}"
+						label="" />
+				</b:dataTableColumn>
+
+			</b:dataTable>
+			<b:commandButton style-class="commandButton" icon-awesome="fa-mail-reply" value="Retour" action="pageAdherent.xhtml"/>
+			</b:panel>
+		</b:form>
+	
+	</ui:define>
+	</ui:composition>
+</html>

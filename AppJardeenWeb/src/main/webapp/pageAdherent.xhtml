@@ -1,0 +1,125 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="/masterArche.xhtml">
+	<ui:define name="head">
+		<f:metadata>
+			<f:event listener="#{mbaffichAdherent.init()}" type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+	<ui:define name="title">Espace adhérent</ui:define>
+	<ui:define name="contentCore">
+	<h2>Espace adhérent</h2>
+	<hr></hr>
+		<b:panel styleClass="pannelFormulaireTache">
+		<b:form>
+			<b:commandButton value="Se déconnecter"
+				action="#{mbConnect.disconnect()}" icon-awesome="fa-chain-broken" look="none"
+						style="
+							background-color:#3E3F3A;
+							color: white;
+							width: 160px; margin-bottom: 15px;
+							"/>
+		</b:form>
+		
+		<b:flyOutMenu width="80px">
+			
+			<b:navLink value="Mes informations" href="editerInfoAdherent.xhtml" />
+			<b:navLink value="Mon planning" href="planningAdherent.xhtml" />
+			<b:navLink value="Mes Terrains" href="terrainsAdherent.xhtml"/>
+			<b:navLink/>
+			<b:navLink value="Les adhérents" href="listeAdherent.xhtml"/>
+			<b:navLink/>
+			<b:navLink value="Les outils" href="listeOutils.xhtml"/>
+			
+		</b:flyOutMenu>
+		
+		
+<div>
+			<b:form id="formAd">
+				<b:row style="margin: 10px;">
+					<h:outputLabel value="Nom : " style="margin-right: 30px ! important;"/>
+					<h:inputText value="#{mbConnect.adherent.nomNaissance}" readonly="true" style="margin-left: 11px ! important;"/>
+					<h:outputLabel value="Prénom : " style="margin-right: 30px ! important;" />
+					<h:inputText value="#{mbConnect.adherent.prenom}" readonly="true" style="margin-left: 100px ! important;"/>
+				</b:row>
+				<b:row style="margin: 10px; margin-top: 25px;">
+					<h:outputLabel value="Civilité : " style="margin-right: 30px ! important;"/>
+					<h:inputText value="#{mbaffichAdherent.civilite()}" readonly="true"/>
+					<h:outputLabel value="Niveau de compétence : " style="margin-right: 30px ! important;"/>
+					<h:inputText value="#{mbaffichAdherent.niveauCompetence()}" readonly="true"/>
+				</b:row>
+				<b:row style="margin: 10px; margin-top: 25px;">
+					<h:outputLabel value="Rôle : " style="margin-right: 30px ! important;"/>
+					<h:inputText value="#{mbaffichAdherent.role()}" readonly="true" style="margin-left: 15px ! important;"/>
+					<h:outputLabel value="Date de Naissance :" style="margin-right: 30px ! important;" />
+					<h:inputText value="#{mbConnect.adherent.dateDeNaissance}" readonly="true" style="margin-left: 32px ! important;">
+					<f:convertDateTime pattern="dd MMMM yyyy"/>
+					</h:inputText>
+				</b:row>
+				<b:row style="margin: 10px; margin-top: 25px;">
+					<h:outputLabel value="Email : " style="margin-right: 30px ! important;"/>
+					<h:inputText value="#{mbConnect.adherent.email}" readonly="true" style="margin-left: 7px ! important;" />
+					<h:outputLabel value="Numèro de téléphone :" style="margin-right: 30px ! important;" />
+					<h:inputText value="#{mbConnect.adherent.telephone}" readonly="true" style="margin-left: 7px ! important;"/>
+				</b:row>		
+			</b:form>
+		</div>
+
+		<b:form>
+			<h3>Liste de mes indisponibilités</h3>
+			<hr></hr>
+			<b:commandButton style-class="commandButton" icon-awesome="fa-calendar" value="Voir le planning" action="planningIndisponibilites.xhtml" look="none"
+						style="
+							background-color:#3E3F3A;
+							color: white;
+							"/>
+			<b:commandButton style-class="commandButton" icon-awesome="fa-pencil" value="Ajouter un indisponibilité" action="gestionIndisponibilite.xhtml" look="none"
+						style="
+							background-color:#3E3F3A;
+							color: white;
+							"/>
+			<b:dataTable value="#{mbaffichAdherent.indisponibilites}"
+				var="indisponibilite" selectionMode="single" info="false">
+				<b:dataTableColumn label="Début d'indisponibilité">
+					<h:outputLabel value="#{indisponibilite.debutDateIndisponibilite}">
+						<f:convertDateTime timeZone="GMT+2" pattern="dd MMMM yyyy - HH"/>h
+					</h:outputLabel>
+				</b:dataTableColumn>
+				<b:dataTableColumn label="Fin d'indisponibilité">
+					<h:outputLabel value="#{indisponibilite.finDateIndisponibilite}">
+						<f:convertDateTime timeZone="GMT+2" pattern="dd MMMM yyyy - HH"/>h
+					</h:outputLabel>
+				</b:dataTableColumn>
+				<b:dataTableColumn style="text-align: center;">
+					<b:commandButton value="Modifier" icon="edit"
+						action="#{mbaffichAdherent.afficherIndispo(indisponibilite)}"
+						label="" look="none"
+						style="
+							background-color:#3E3F3A;
+							color: white;
+							"/>
+				</b:dataTableColumn>
+				<b:dataTableColumn style="text-align: center;">
+					<b:commandButton value="Supprimer" icon="trash" onclick="#{mbaffichAdherent.indisponibilites}"
+						action="#{mbaffichAdherent.supprimerIndispo(indisponibilite)}"
+						label="" look="none"
+						style="
+							background-color:#3E3F3A;
+							color: white;
+							"/>
+				</b:dataTableColumn>
+			</b:dataTable>
+		</b:form>
+<b:image value="./resources/pictures/#{mbaffichAdherent.photo}" style="position: relative; left: 970px; bottom: 720px;"></b:image>
+	</b:panel>
+	</ui:define>
+</ui:composition>
+
+
+</html>

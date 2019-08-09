@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<ui:composition template="/masterArche.xhtml">
+	<ui:define name="title">Contacts</ui:define>
+	<ui:define name="head">
+		<title>Sign In Template for BootsFaces</title>
+		<meta name="author" content="Arthur BALAY"></meta>
+	</ui:define>
+		<ui:define name="navbar">
+		<b:container>
+			<b:navBar brandImg="resources/pictures/leaf65_30px.png"
+				brand="Jardeen" fluid="false" inverse="true" position="top"
+				sticky="true"
+				style="
+	margin: 0;
+    padding: 3px 3px 10px;
+    text-align: center;
+	-moz-box-shadow: 8px 8px 12px #aaa; 
+  	-webkit-box-shadow: 8px 8px 12px #aaa; 
+  	box-shadow: 8px 8px 12px #555; 
+	filter:progid:DXImageTransform.Microsoft.Glow(Color=#c0c0c0,Strength=8)">
+	
+	<b:navbarLinks
+			style="
+			margin: 0;
+    		padding: 5px 0px 0px;
+   	 		text-align: center">
+					<b:navLink
+						value="Accueil"
+						icon-awesome="home"
+						href="accueilVisiteur.xhtml"
+						/>
+					<b:navLink
+						value="Inscription"
+						icon-awesome="fa-pencil"
+						href="enregistrementAdherent.xhtml"
+						/>
+					<b:navLink value="Contact" icon-awesome="fa-bullhorn "
+						href="contact.xhtml"
+						/>
+					<b:navLink
+						value="Connexion"
+						icon-awesome="fa-chain"
+						href="identification.xhtml"
+						style="position: relaive; left: 300px;"
+						/>
+				</b:navbarLinks>
+			</b:navBar>
+		</b:container>
+	</ui:define>
+	<ui:define name="contentCore">
+		<b:row style="position: relative; top: 100px;">
+							<b:column span="6" offset="3">
+								<h2>Nous contacter</h2>
+								<hr></hr>
+							</b:column>
+						</b:row>
+					<b:panel id="panInfosTache" rendered="true" style-class="pannelFormulaireTache" style="margin-top: 100px !important;">
+					<b:form>
+						
+						<b:row>
+							<b:column span="6" offset="3">
+								<b:inputText id="name" placeholder="Votre nom">
+									<f:facet name="prepend">
+										<b:icon name="user" />
+									</f:facet>
+								</b:inputText>
+							</b:column>
+						</b:row>
+						<b:row>
+							<b:column span="6" offset="3">
+								<b:inputText placeholder="Votre addresse mail" type="email"
+									value="#{mbContact.mail}">
+									<f:facet name="prepend">
+										<b:icon name="email" />
+									</f:facet>
+								</b:inputText>
+
+							</b:column>
+						</b:row>
+						<b:row>
+							<b:column span="6" offset="3">
+								<b:inputText placeholder="Objet"
+									value="#{mbContact.subject}">
+									<f:facet name="prepend">
+										<b:icon name="tel" />
+									</f:facet>
+								</b:inputText>
+							</b:column>
+						</b:row>
+						<b:row>
+							<b:column span="6" offset="3">
+								<b:inputTextarea placeholder="Tapez votre message ici...."
+									value="#{mbContact.message}">
+									<f:facet name="prepend">
+										<b:iconAwesome name="message" />
+									</f:facet>
+								</b:inputTextarea>
+							</b:column>
+						</b:row>
+						<b:row>
+							<b:column span="6" offset="3">
+								<b:commandButton look="primary btn-block" style="background-color: #3E3F3A;" value="Envoyer"
+									icon="log-in" size="lg" action="#{mbContact.envoiMail()}" />
+							</b:column>
+						</b:row>
+						</b:form>
+				</b:panel>
+	</ui:define>
+</ui:composition>
+</html>

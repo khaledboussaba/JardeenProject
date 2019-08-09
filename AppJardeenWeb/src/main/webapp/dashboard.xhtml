@@ -1,0 +1,169 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+	<ui:composition template="/masterArche.xhtml">
+		<ui:define name="head">
+		</ui:define>
+		<ui:define name="title">Dashboard</ui:define>
+		<ui:define name="contentCore">
+			<b:form>
+				<b:row>
+					<b:column>
+						<div style="display: flex; justify-content: space-between;">
+						<h2>Les actualités de Jardeen  -
+									#{mbDashboard.dateDuJour.toLocaleString().split(' ')[0]}
+									#{mbDashboard.dateDuJour.toLocaleString().split(' ')[1]}
+									#{mbDashboard.dateDuJour.toLocaleString().split(' ')[2]}
+						</h2>
+						<h4 style="text-align: right; margin-right: 20px; position: relative; top: 20px;">Bienvenue #{mbConnect.adherent.prenom}</h4>
+						</div>
+						
+					</b:column>
+				</b:row>
+				<hr size="10"></hr>
+				<b:panel style-class="pannel2">
+				<b:row>
+					<b:column span="4">
+						<b:panel
+							style-class="pannel2"
+							title="Tâches du jour"
+							collapsible="false"
+							look="success"
+							style= "min-height: 65vh;"
+							>
+							<ui:repeat var="tache" value="#{mbDashboard.tachesDuJour}">
+								<b:panel
+									title="#{tache.libelleTache}"
+									collapsed="true"
+									style-class="pannel3"
+									>
+									<label>Terrain : </label><h:outputText
+																value=" #{tache.parcelle.terrain.libelleTerrain}"
+																style="margin-right: 30px;"
+																/>
+									<label>Parcelle : </label><h:outputText value=" #{tache.parcelle.libelleParcelle}"/>
+									<br/>
+									<br/>
+									<label>Plante : </label><h:outputText
+																value=" #{tache.plante.libellePlante}"
+																style="margin-right: 30px;"/>
+									<br/>
+									<label>Type d'action : </label><h:outputText value=" #{tache.action.libelleAction}"/>
+									<br/>
+									<br/>
+									<label>Jardiniers affectés : </label>
+									<ui:repeat var="adherent" value="#{tache.affectationsAdherents}">
+										<br/>
+										<h:outputText style="margin-left: 30px" value=" #{adherent.adherent.prenom} #{adherent.adherent.nomNaissance}"/>
+									</ui:repeat>
+									<br/>
+									<br/>
+									<label>Outils alloués : </label>
+									<ui:repeat var="outil" value="#{tache.outilTache}">
+										<br/>
+										<h:outputText style="margin-left: 30px" value=" #{outil.outil.libelleOutil} (#{outil.quantiteOutilUtilisee})"/>
+									</ui:repeat>
+									<br/>
+									<br/>
+									<label>Début : </label><h:outputText  style="margin-right: 30px" value=" #{tache.dateDebutTache.hours} h"/>
+									<label>Fin : </label><h:outputText value=" #{tache.dateFinTache.hours} h"/>
+								</b:panel>
+							</ui:repeat>
+						</b:panel>
+					</b:column>
+					<b:column span="4">
+						<b:panel
+							style-class="pannel2"
+							title="Alertes"
+							collapsible="false"
+							look="danger"
+							style= "min-height: 65vh;"
+							>
+							<b:panel
+								title="Cotisations à payer (#{mbDashboard.alertesCotisation.size()})"
+								collapsed="true"
+								style-class="pannel3"
+								>
+								<ul>
+									<ui:repeat var="alerteCotisation" value="#{mbDashboard.alertesCotisation}">
+										<li>
+											<h:outputText value=" #{alerteCotisation.description}"/>
+										</li>
+									</ui:repeat>
+								</ul>
+							</b:panel>
+							<b:panel
+								title="Tâches non pourvues (#{mbDashboard.alertesJardiniers.size()})"
+								collapsed="true"
+								style-class="pannel3"
+								>
+								<ul>
+									<ui:repeat var="alerteJardinier" value="#{mbDashboard.alertesJardiniers}">
+										<li>
+											<h:outputText value=" #{alerteJardinier.description}"/>
+										</li>
+									</ui:repeat>
+								</ul>
+							</b:panel>
+						</b:panel>
+					</b:column>
+					<b:column span="4">
+						<b:panel
+							style-class="pannel2"
+							title="Notifications"
+							collapsible="false"
+							look=""
+							style= "min-height: 65vh;"
+							>
+							<b:panel
+								title="Période de semis / plantation (#{mbDashboard.notificationsSemisPlante.size()})"
+								collapsed="true"
+								style-class="pannel3"
+								>
+								<ul>
+									<ui:repeat var="notificationSemisPlante" value="#{mbDashboard.notificationsSemisPlante}">
+										<li>
+											<h:outputText value=" #{notificationSemisPlante.description}"/>
+										</li>
+									</ui:repeat>
+								</ul>
+							</b:panel>
+							<b:panel
+								title="Période de floraison (#{mbDashboard.notificationsFloraisonPlante.size()})"
+								collapsed="true"
+								style-class="pannel3"
+								>
+								<ul>
+									<ui:repeat var="notificationFloraisonPlante" value="#{mbDashboard.notificationsFloraisonPlante}">
+										<li>
+											<h:outputText value=" #{notificationFloraisonPlante.description}"/>
+										</li>
+									</ui:repeat>
+								</ul>
+							</b:panel>
+							<b:panel
+								title="Période de récolte (#{mbDashboard.notificationsRecoltePlante.size()})"
+								collapsed="true"
+								style-class="pannel3"
+								>
+								<ul>
+									<ui:repeat var="notificationRecoltePlante" value="#{mbDashboard.notificationsRecoltePlante}">
+										<li>
+											<h:outputText value=" #{notificationRecoltePlante.description}"/>
+										</li>
+									</ui:repeat>
+								</ul>
+							</b:panel>
+						</b:panel>
+					</b:column>
+				</b:row>
+				</b:panel>
+			</b:form>
+		</ui:define>
+	</ui:composition>
+</html>

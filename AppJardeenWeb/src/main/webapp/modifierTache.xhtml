@@ -1,0 +1,146 @@
+<!-- <?xml version='1.0' encoding='UTF-8' ?> -->
+<!-- <!DOCTYPE html> -->
+<!-- <html xmlns="http://www.w3.org/1999/xhtml" -->
+<!-- 	xmlns:ui="http://java.sun.com/jsf/facelets" -->
+<!-- 	xmlns:b="http://bootsfaces.net/ui" -->
+<!-- 	xmlns:f="http://java.sun.com/jsf/core" -->
+<!-- 	xmlns:h="http://java.sun.com/jsf/html"> -->
+
+<!-- <ui:composition template="/masterArche.xhtml"> -->
+<!-- 	<ui:define name="head"> -->
+<!-- 	</ui:define> -->
+<!-- 	<ui:define name="title">Formulaire Modification Tâche</ui:define> -->
+<!-- 	<ui:define name="contentCore"> -->
+<!-- 		<h2>Modifier une tâche</h2> -->
+<!-- 		<hr></hr> -->
+<!-- 		<b:form> -->
+<!-- 			<b:panel id="panInfoTache" style-class="pannel2"> -->
+
+<!-- 				<b:row> -->
+<!-- 					<b:column span="3"> -->
+<!-- 						<b:inputText readonly="true" style="background-color:#e0e0e0;" id="ddlTerrain" -->
+<!-- 							value="#{mbModifierTache.terrainTache.libelleTerrain}" -->
+<!-- 							label="Terrain" /> -->
+
+<!-- 					</b:column> -->
+<!-- 					<b:column span="3"> -->
+<!-- 						<b:inputText readonly="true" style="background-color:#e0e0e0;" id="ddlParcelle" -->
+<!-- 							value="#{mbModifierTache.parcelleTache.libelleParcelle}" -->
+<!-- 							label="Parcelle" /> -->
+<!-- 					</b:column> -->
+<!-- 				</b:row> -->
+<!-- 				<b:row> -->
+<!-- 					<b:column span="3"> -->
+<!-- 						<b:inputText readonly="true" style="background-color:#e0e0e0;" id="txtPlante" label="Plante" -->
+<!-- 							value="#{mbModifierTache.selectedEvent.plante.libellePlante}" /> -->
+<!-- 					</b:column > -->
+<!-- 					<b:column span="3"> -->
+<!-- 						<b:inputText readonly="true" style="background-color:#e0e0e0;" id="txtAction" label="Action" -->
+<!-- 							value="#{mbModifierTache.actionTache.libelleAction}" /> -->
+<!-- 					</b:column> -->
+<!-- 				</b:row> -->
+
+<!-- 				<b:row> -->
+<!-- 					<b:column span="6"> -->
+<!-- 						<b:inputText id="txtIntituleTache" label="Intitulé de la tâche" -->
+<!-- 							value="#{mbModifierTache.selectedEvent.description}" /> -->
+<!-- 					</b:column> -->
+<!-- 				</b:row> -->
+<!-- 				<b:row> -->
+<!-- 					<b:column span="3" > -->
+<!-- 						<b:selectOneMenu id="ddlCompetence" -->
+<!-- 							value="#{mbModifierTache.competenceTache.libelleCompetence}" -->
+<!-- 							label="Compétence"> -->
+<!-- 							<f:selectItems value="#{mbModifierTache.competences}" -->
+<!-- 								var="competence" itemValue="#{competence}" -->
+<!-- 								itemLabel="#{competence.libelleCompetence}" /> -->
+<!-- 						</b:selectOneMenu> -->
+<!-- 					</b:column> -->
+<!-- 					<b:column span="3"> -->
+<!-- 						<b:touchSpin id="tsNbJardiniers" -->
+<!-- 							value="#{mbFormulaireTache.nbJardiniersChoisi}" min="0" max="99" -->
+<!-- 							step="1" label="Nb jardiniers requis" -->
+<!-- 							initval="#{mbModifierTache.nbrJardinniersRequis}" /> -->
+<!-- 					</b:column> -->
+<!-- 				</b:row> -->
+<!-- 				<b:row> -->
+<!-- 					<b:column span="6" > -->
+<!-- 						<b:dateTimePicker id="dateTache" label="Date" -->
+<!-- 							value="#{mbModifierTache.debutTache}" format="YYYY-MM-DD " -->
+<!-- 							placeholder="Date de la tâche" icon-position="right" -->
+<!-- 							side-by-side="true" show-date="true" show-time="true" -->
+<!-- 							show-icon="true" /> -->
+<!-- 					</b:column> -->
+<!-- 				</b:row> -->
+<!-- 				<b:row> -->
+<!-- 					<b:column span="3" > -->
+<!-- 						<b:touchSpin id="tsHeureDebut" min="7" max="18" step="1" -->
+<!-- 							value="#{mbModifierTache.debutTache.hours}" inline="true" -->
+<!-- 							label="Heure début" postfix="H" style="width:50px; margin:0px"/> -->
+<!-- 					</b:column> -->
+<!-- 					<b:column> -->
+<!-- 						<b:column span="3" > -->
+<!-- 							<b:touchSpin id="tsHeureFin" min="8" max="19" step="1" -->
+<!-- 								value="#{mbModifierTache.finTache.hours}" inline="true" -->
+<!-- 								label="Heure fin" postfix="H" style="width:50px; margin:0px"/> -->
+<!-- 						</b:column> -->
+<!-- 					</b:column> -->
+<!-- 				</b:row> -->
+
+
+
+<!-- 				<b:row style="position: relative; left: 70px;"> -->
+<!-- 					<b:column span="3" offset="6"> -->
+<!-- 						<b:commandButton id="btnAdherentsDisponibles" -->
+<!-- 							value="Jardiniers disponibles" -->
+<!-- 							icon-awesome="fa-angle-double-right" icon-align="right"> -->
+<!-- 							<f:ajax -->
+<!-- 								render="panInfoTache panTableauxAdherents dataTableDisponibles" -->
+<!-- 								execute="dateTache tsHeureDebut tsHeureFin ddlCompetence txtIntituleTache txtPlante txtAction tsNbJardiniers" -->
+<!-- 								listener="#{mbModifierTache.listerDisponibles()}" /> -->
+<!-- 						</b:commandButton> -->
+<!-- 					</b:column> -->
+<!-- 				</b:row> -->
+
+<!-- 			</b:panel> -->
+
+
+<!-- 			<b:panel id="panTableauxAdherents" -->
+<!-- 				hidden="#{mbModifierTache.affichageTableauxAdherents}" -->
+<!-- 				style-class="pannel2"> -->
+<!-- 				<b:row> -->
+<!-- 					<b:column> -->
+<!-- 						<b:dataTable id="ddlAdherents" label="Adherents affectés" -->
+<!-- 							value="#{mbModifierTache.adherentsAffectes}" info="false" -->
+<!-- 							var="adherent" searching="false" paginated="false" select="true" -->
+<!-- 							caption="- Jardiniers affectés -" ajax="true" responsive="true" -->
+<!-- 							striped="false" style="background-color: FloralWhite;"> -->
+<!-- 							<b:dataTableColumn label="Prénom" value="#{adherent.prenom}" /> -->
+<!-- 							<b:dataTableColumn label="Nom" value="#{adherent.nomNaissance}" /> -->
+
+<!-- 						</b:dataTable> -->
+
+
+<!-- 					</b:column> -->
+
+
+<!-- 					<b:column span="5"> -->
+<!-- 						<b:dataTable id="dataTableDisponibles" -->
+<!-- 							value="#{mbModifierTache.adherentsDisponibles}" -->
+<!-- 							caption="- Jardiniers disponibles et compétents -" -->
+<!-- 							var="adherentDisponible" select="true" paginated="false" -->
+<!-- 							ajax="true" searching="false" info="false" responsive="true" -->
+<!-- 							striped="false" style="background-color: FloralWhite;"> -->
+<!-- 							<b:dataTableColumn value="#{adherentDisponible.nomNaissance}" -->
+<!-- 								label="Nom" _order="asc" width="50%" /> -->
+<!-- 							<b:dataTableColumn value="#{adherentDisponible.prenom}" -->
+<!-- 								label="Prénom" /> -->
+<!-- 						</b:dataTable> -->
+<!-- 					</b:column> -->
+<!-- 				</b:row> -->
+<!-- 			</b:panel> -->
+<!-- 		</b:form> -->
+
+<!-- 	</ui:define> -->
+<!-- </ui:composition> -->
+<!-- </html> -->

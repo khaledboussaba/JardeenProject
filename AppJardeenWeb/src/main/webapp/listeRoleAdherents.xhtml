@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<ui:composition template="/masterArche.xhtml">
+	<ui:define name="title">Role des Adhérents</ui:define>
+	<ui:define name="contentCore">
+		<h1>Liste des Role des Adhérents de l'association :</h1>
+		<br />
+		<h:form>
+			<b:dataTable value="#{mbListeAdherentRole.adherents}" var="adherent" class="editableAdherentTable" responsive="true">
+				<b:dataTableColumn value="#{adherent.prenom}" label="Prenom de l'adherent" />
+				<b:dataTableColumn value="#{adherent.nomNaissance}" label="Nom de l'adherent" />
+				<b:dataTableColumn value="#{adherent.role.idRole}" label="id du role" />
+				<b:dataTableColumn value="#{adherent.role.libelleRole}" label="Nom du role" />
+				<b:dataTableColumn>
+					<b:selectOneMenu
+							id="ddlRole"
+							value="#{mbListeAdherentRole.roleSelected}"
+							label="Role">
+							<f:selectItems
+								value="#{mbListeAdherentRole.roles}"
+								var="roles"
+								itemValue="#{roles}"
+								itemLabel="#{roles.libelleRole}"
+								/>
+							<f:ajax
+								listener="#{mbListeAdherentRole.modifierRole()}"
+								execute="ddlRole"
+								render="ddlRole"
+							/>
+						</b:selectOneMenu>			
+				</b:dataTableColumn>
+			</b:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

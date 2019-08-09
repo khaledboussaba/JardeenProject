@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<ui:composition template="/masterArche.xhtml">
+	<ui:define name="title">Les Adhérents</ui:define>
+	<ui:define name="script">
+		<script src="./resources/js/adherent.js" type="text/javascript"></script>
+	</ui:define>
+	<ui:define name="contentCore">
+	<h2>Liste des Adhérents</h2>
+	<hr></hr>
+		<b:panel styleClass="pannelFormulaireTache">
+
+			<input
+				type="#{mbaffichAdherent.visInput}"
+				class="pseudoCommandButton"
+				value="Inscriptions / Desinscriptions"
+				onclick="javascript:change('#form-liste-adherents', '#form-liste-attente-desinscrit')" />
+
+			<!-- 	INSCRITS	 -->
+			<h:form id="form-liste-adherents">
+				<b:dataTable id="dtListeAdherents" value="#{mbListeAdherents.adherents}" var="adherent" auto-update="true">
+					<b:dataTableColumn label="Photo">
+						<img
+							src="resources/pictures/#{mbListeAdherents.getPhoto(adherent)}.png" />
+					</b:dataTableColumn>
+					<b:dataTableColumn value="#{adherent.nomNaissance}" label="Nom" />
+					<b:dataTableColumn value="#{adherent.prenom}" label="Prenom" />
+					<b:dataTableColumn value="#{adherent.email}" label="Email" />
+					<b:dataTableColumn value="#{adherent.competence.libelleCompetence}"
+						label="Compétence" />
+					<b:dataTableColumn value="#{mbListeAdherents.obtenirDerniereDateInscription(adherent)}"
+						label="Date inscription" />
+						
+					<b:dataTableColumn value="#{adherent.telephone}" label="Téléphone" />
+					<b:dataTableColumn  label="Désinscrire"  style="width:200px;" 
+										 rendered="#{mbaffichAdherent.affichage}">
+						<b:commandButton
+								id="btnAfficherDesinscrireAdherent"
+								value="Désinscrire"
+								icon-awesome="user-slash"
+								icon-align="right"
+								hidden="#{mbListeAdherents.affichageBtnAfficherDesinscrireAdherent}"		
+								>
+								<f:ajax
+									render="ddlMotifDesinscription btnDesinscrireAdherent"
+									listener="#{mbListeAdherents.afficherMotifDesinscription()}"
+									/>
+						</b:commandButton>
+						<b:commandButton id="btnDesinscrireAdherent" value="OK" 
+							icon-awesome="user-slash" icon-align="right"
+							hidden="#{mbListeAdherents.affichageBtnDesinscrireAdherent}">
+							<f:ajax execute="ddlMotifDesinscription"
+								listener="#{mbListeAdherents.desinscrireAdherent(adherent)}" />
+						</b:commandButton>
+						<b:selectOneMenu
+							id="ddlMotifDesinscription" style="margin-top:5px;"
+							value="#{mbListeAdherents.motifSelected}"
+							label="Motif : "
+							auto-update="true"
+							hidden="#{mbListeAdherents.affichageDdlMotifDesinscription}"
+							>
+							<f:selectItems
+								value="#{mbListeAdherents.motifs}"
+								var="motif"
+								itemValue="#{motif}"
+								itemLabel="#{motif.libelleMotifDesinscription}"
+							/>
+						</b:selectOneMenu>
+						
+					</b:dataTableColumn>						
+					
+				</b:dataTable>
+			</h:form>
+
+			<!-- 	EN ATTENTE D'INSCRIPTION	& 	DESINCRITS	 -->
+			<h:form id="form-liste-attente-desinscrit" style="display: none;">
+				<h3>Inscriptions en attente 
+				<span >
+							<b:badge  value="&#160;" style="background-color: green;" />
+						</span> / Inscriptions arrivant à échéance <span>
+							<b:badge  value="&#160;" style="background-color: yellow" />
+						</span>
+				</h3>
+				<hr></hr>
+				<b:dataTable id="tabAdherentsAInscrire" value="#{mbListeAdherents.listeTabAdherentEnAttenteInscriptionEtInscriptionArrivantATerme}" auto-update="true"
+					var="adherent" responsive="true" style="width: 100% !important">
+					<b:dataTableColumn label="Etat">
+						<div title="#{mbListeAdherents.etatAdherent(adherent)}">
+							<b:badge  value="&#160;" style="background-color: #{mbListeAdherents.couleurEtatAdherent(adherent)}" />
+						</div>
+					</b:dataTableColumn>	
+					<b:dataTableColumn value="#{adherent.nomNaissance}" label="Nom" />
+					<b:dataTableColumn value="#{adherent.prenom}" label="Prenom" />
+					<b:dataTableColumn value="#{adherent.email}" label="Email" />
+					<b:dataTableColumn value="#{adherent.telephone}" label="Téléphone" />
+					<b:dataTableColumn>
+						<f:facet name="header">Action</f:facet>
+						<b:commandLink value="Inscrire" >
+							<f:ajax listener="#{mbListeAdherents.inscrireAdherent(adherent)}"/>
+						</b:commandLink>
+					</b:dataTableColumn>
+				</b:dataTable>
+
+				<h3>Liste des adhérents désinscrits						<span title="#{mbListeAdherents.etatAdherent(adherent)}">
+							<b:badge  value="&#160;" style="background-color:red;" />
+						</span> / Fin d'inscription <span title="#{mbListeAdherents.etatAdherent(adherent)}">
+							<b:badge  value="&#160;" style="background-color:orange" />
+						</span>
+				
+				</h3>
+				<hr></hr>
+				<b:dataTable id="tabAdherentsDesinscrit" value="#{mbListeAdherents.listeAdherentsDesinscritOuInscriptionMaxPerimee}" auto-update="true"
+					var="adherent" responsive="true" style="width: 100% !important">
+					<b:dataTableColumn label="Etat">
+						<div title="#{mbListeAdherents.etatAdherent(adherent)}">
+							<b:badge  value="&#160;" style="background-color:#{mbListeAdherents.couleurEtatAdherent(adherent)}" />
+						</div>
+					</b:dataTableColumn>			
+					<b:dataTableColumn value="#{adherent.nomNaissance}" label="Nom" />
+					<b:dataTableColumn value="#{adherent.prenom}" label="Prenom" />
+					<b:dataTableColumn value="#{adherent.email}" label="Email" />
+					<b:dataTableColumn value="#{adherent.telephone}" label="Téléphone" />		
+					
+					<b:dataTableColumn>
+						<f:facet name="header">Action</f:facet>
+						<b:commandLink value="Réinscrire">
+							<f:ajax listener="#{mbListeAdherents.inscrireAdherent(adherent)}"/>
+							</b:commandLink>
+					</b:dataTableColumn>
+				</b:dataTable>
+
+			</h:form>
+
+		</b:panel>
+		<b:form>
+			<b:commandButton style-class="commandButton" icon-awesome="fa-mail-reply" value="Retour" action="pageAdherent.xhtml"/>
+	</b:form>
+	</ui:define>
+</ui:composition>
+</html>

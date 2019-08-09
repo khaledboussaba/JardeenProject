@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+	<ui:composition template="/masterArche.xhtml">
+		<ui:define name="head">
+			<f:metadata>
+				<f:event listener="#{mbaffichAdherent.init()}" type="preRenderView"></f:event>
+			</f:metadata>
+		</ui:define>
+		<ui:define name="title">Formulaire parcelle
+			<h:outputStylesheet name="css/masterArche.css" />
+		</ui:define>
+	<ui:define name="contentCore">
+		
+		<h2>Modifier une parcelle</h2>
+		<hr></hr>
+		
+		<b:form>
+		<b:panel styleClass="pannel2">
+			<h:outputLabel value="Nom de parcelle :" />
+			<h:inputText value="#{mbEditerParcelle.parcelle.libelleParcelle}" />
+			
+			<b:selectOneMenu required="true" label=" Type de sol :" value="#{mbEditerParcelle.parcelle.typeSol.libelleTypeSol}">
+				<f:selectItems value="#{mbEditerParcelle.typesSol}" 
+						   var="typeSol" 
+					       itemValue="#{typeSol.libelleTypeSol}"
+					       itemLabel="#{typeSol.libelleTypeSol}" />
+			</b:selectOneMenu>
+
+			
+			<b:selectOneMenu required="true" label=" Terrain :" value="#{mbEditerParcelle.parcelle.terrain.libelleTerrain}">
+				<f:selectItems value="#{mbEditerParcelle.terrains}" 
+						   var="terrain" 
+					       itemValue="#{terrain.libelleTerrain}"
+					       itemLabel="#{terrain.libelleTerrain}" />
+			</b:selectOneMenu>
+			
+			<b:selectOneMenu required="true" label=" Indice acidité :" value="#{mbEditerParcelle.parcelle.acidite.indiceAcidite}">
+				<f:selectItems value="#{mbEditerParcelle.acidites}" 
+						   var="acidite" 
+					       itemValue="#{acidite.indiceAcidite}"
+					       itemLabel="#{acidite.indiceAcidite}" />
+			</b:selectOneMenu>
+			
+			<b:dateTimePicker label="Date de création" value="#{mbEditerParcelle.parcelle.dateCreationParcelle}" show-icon="true" show-time="false" />
+			<b:dateTimePicker label="Date de retrait" value="#{mbEditerParcelle.parcelle.dateRetraitParcelle}" show-icon="true" show-time="false" />
+		
+			<b:commandButton style-class="commandButton" icon-awesome="fa-mail-reply" value="Retour" action="listeParcelles.xhtml"/>
+			<b:commandButton style-class="commandButton" icon-awesome="fa-check-square-o" value="Valider" action="#{mbEditerParcelle.UpdateParcelle()}"/>
+			</b:panel>
+		</b:form>
+		</ui:define>
+	</ui:composition>
+</html>

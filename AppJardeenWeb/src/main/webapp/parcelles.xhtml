@@ -1,0 +1,430 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jstl/core">
+<h:head>
+	<!-- 	Insérer dans chaque page un titre -->
+	<title>Gestion des Parcelles</title>
+
+	<!-- Ajouter du css à nos pages -->
+
+	<h:outputStylesheet library="css" name="masterArche.css" />
+	<h:outputStylesheet library="css" name="bootstrap-theme.css" />
+	<h:outputStylesheet library="css" name="stylesAPISelection.css" />
+	
+	<script>
+		$.blockUI.defaults = {
+			message: null,
+			overlayCSS:  { 
+		        backgroundColor: '#000', 
+		        opacity:         0.1, 
+		        cursor:          'wait' 
+		    }, 
+		}
+	</script>
+
+</h:head>
+<f:metadata>
+	<f:event listener="#{mbParcelle.init()}" type="preRenderView"></f:event>
+</f:metadata>
+<h:body class="body">
+	<div id="top"></div>
+	<ui:insert name="navbar">
+		<b:navBar brandImg="resources/pictures/leaf65_30px.png"
+			brand="Jardeen" fluid="false" inverse="true" position="top"
+			sticky="true"
+			style="
+				-moz-box-shadow: 8px 8px 12px #aaa; 
+  						-webkit-box-shadow: 8px 8px 12px #aaa; 
+  						box-shadow: 8px 8px 12px #555; 
+	margin: 0;
+    padding: 3px 3px 10px;
+    text-align: center;
+	filter:progid:DXImageTransform.Microsoft.Glow(Color=#c0c0c0,Strength=8)">
+			<b:navbarLinks
+				style="
+	margin: 0;
+    padding: 5px 0px 0px;
+    text-align: center">
+				<b:navLink value="Accueil" icon-awesome="home"
+					href="dashboard.xhtml" />
+				<b:dropMenu value="Adhérent" icon-awesome="users">
+					<b:navLink value="Mon Profil" icon-awesome="user"
+						outcome="pageAdherent.xhtml"></b:navLink>
+					<b:navLink value="Liste d'adherents" icon-awesome="users"
+						outcome="listeAdherent.xhtml"></b:navLink>
+				</b:dropMenu>
+				<b:navLink
+					value="Terrains"
+					icon-awesome="fa-list"
+					href="listeTerrain.xhtml"
+					/>
+				<b:navLink
+					value="Planning"
+					icon-awesome="fa-calendar"
+					href="planningTaches.xhtml"
+					/>
+				<b:navLink
+					value="Plantes"
+					href="plantes.xhtml"
+					icon-awesome="fa-pagelines"
+					/>
+				<b:navLink style="position: relative; left: 184px;">
+					<b:form>
+						<b:commandButton
+							value="Se déconnecter"
+							icon-awesome="fa-chain-broken"
+							action="#{mbDisconnect.disconnect()}"
+							style="
+								background-color: transparent;
+								padding: 0;								
+								vertical-align: top;
+								line-height: 1;
+								text-shadow: none;
+								font-size: 15px;
+								color: #93c54b;
+								"
+							look="none"
+							/>
+					</b:form>
+				</b:navLink>
+			</b:navbarLinks>
+
+		</b:navBar>
+		<br />
+		<br />
+		<br />
+		<br />
+	</ui:insert>
+	<!-- container bootfaces, pour le body -->
+	<b:container id="fondVerticaleBody" style="padding-left: 40px; padding-right: 40px;">
+					<b:form id="myForm">
+						<h2>
+							Gestion des Parcelles
+							<a	href="#tabListeParcelles"
+								style="text-decoration:none; margin: 10px;"
+								><b:iconAwesome value="table"/></a>
+							<a 	href="#tabListeParcellesRetirees"
+								style="text-decoration:none;"
+								><b:iconAwesome value="table"/></a>
+						</h2>
+						<hr></hr>
+					
+						<b:row>
+							<b:column span="3">
+								<b:panel
+									id="pannelParcelle"
+									rendered="true"
+									style-class="pannel2"
+									style="padding: 0 10px 0 10px;"
+									>
+									<b:row>
+										<b:column>
+											<h3>#{mbParcelle.terrain.libelleTerrain}</h3>
+											<hr></hr>
+										</b:column>
+									</b:row>
+												
+									<b:row>
+										<b:inputText 
+											label="Libellé"
+											value="#{mbParcelle.parcelle.libelleParcelle}" 
+											placeholder="Entrez un nom"
+											/>
+										<b:selectOneMenu
+											id="ddlHumiditeSol"
+											value="#{mbParcelle.parcelle.humiditeSol}"
+											label="Humidité du sol"
+											>
+												<f:selectItems
+													value="#{mbParcelle.listeHumiditeSol}"
+													var="humiditeSol"
+													itemValue="#{humiditeSol}"
+													itemLabel="#{humiditeSol.libelleHumidite}"
+													/>
+											</b:selectOneMenu>
+											<b:selectOneMenu
+												id="ddlAcidite"
+												value="#{mbParcelle.parcelle.acidite}"
+												label="Acidité du sol"
+												>
+												<f:selectItems
+													value="#{mbParcelle.listeAcidite}"
+													var="acidite"
+													itemValue="#{acidite}"
+													itemLabel="#{acidite.indiceAcidite}"
+													/>
+											</b:selectOneMenu>
+											<b:selectOneMenu
+												id="ddlParcelle"
+												value="#{mbParcelle.parcelle.typeSol}"
+												label="Type de sol"
+												>
+												<f:selectItems
+													value="#{mbParcelle.listeTypeSol}"
+													var="typeSol"
+													itemValue="#{typeSol}"
+													itemLabel="#{typeSol.libelleTypeSol}"
+													/>
+											</b:selectOneMenu>
+					    					<b:colorPicker
+					    						swatches="#7e4580|#85a6f5|#b8deb4|#db892c|#ebe77f|#de6666|#136875"
+					    						value="#{mbParcelle.parcelle.couleurParcelle}"
+					    						label="Couleur"
+					    						/>
+									</b:row>
+								</b:panel>
+							</b:column>
+							<b:column span="9">
+								<b:row>
+									<b:column span="3">			
+										<b:commandButton
+											id="btnCreerParcelle"
+											onclick="setJSValue()"
+											value="Enregistrer"
+											style="
+												margin-top:0.5em;
+												margin-left: 30px;
+												align-text:center;
+												background-color:#3E3F3A;
+												color: white;
+												width:100%;
+												"
+											action="#{mbParcelle.creerParcelle()}"
+											icon-awesome="fa-check-square-o"
+											look="none"
+											>
+										
+										</b:commandButton>
+										<h:inputHidden
+											id="jsValue"
+											value="#{mbParcelle.emplacementsSelectionneesFromJS}"
+											/>
+									</b:column>
+									<b:column span="3" offset="1">
+										<b:commandButton
+											id="btnSuppressionParcelle"
+											onclick="setJSValue()"
+											value="Retirer la parcelle"
+											style="
+												margin-top:0.5em;
+												margin-left: 30px;
+												align-text:center;
+												background-color:#3E3F3A;
+												width:100%;
+												color: white;
+												"
+											action="#{mbParcelle.supprimerParcelle()}"
+											icon-awesome="fa-close"
+											look="none"
+											/>
+									</b:column>
+									<b:column span="3" offset="1">
+										<b:commandButton
+											id="btnFusionParcelle"
+											onclick="setJSValue()"
+											value="Fusionner les parcelles"
+											style="
+												margin-top:0.5em;
+												margin-left: 30px;
+												align-text:center;
+												background-color:#3E3F3A;
+												width:100%;
+												color: white;
+												"
+											action="#{mbParcelle.fusionnerParcelles()}"
+											icon-awesome="fa-compress"
+											look="none"
+											/>
+									</b:column>
+									<b:column>
+										<h:outputText
+											value="#{mbParcelle.msgInfoActionGrilleJS}"
+											style="#{mbParcelle.etatMsgInfoGrilleJS}"/>
+									</b:column>
+								</b:row>
+								<b:row>
+									<main>
+										<section class="sec demo">
+											<section class="box-wrap boxes green" style="max-width: 850px">
+												<c:forEach begin="1" end="180">
+													<div id="#{mbParcelle.obtenirIdDiv()}" class="#{mbParcelle.estOccupee()}" title="#{mbParcelle.obtenirLibelleParcelle()}"
+														style="width: 40px; border:1px solid lightgray; height: 40px; #{mbParcelle.obtenirCouleurEmplacement()}"></div>
+												</c:forEach>
+											</section>
+										</section>
+									</main>
+								</b:row>
+							</b:column>
+						</b:row>
+						
+						<b:row id ="tabListeParcelles">
+							<b:row>
+								<h3>
+									Liste des parcelles actuelles
+									<a href="#top" style="text-decoration:none; margin: 10px;" > 
+										<b:iconAwesome value="table" />
+									</a>
+								</h3>
+								<hr></hr>
+							</b:row>
+							<b:dataTable value="#{mbParcelle.listeParcellesNonRetirees}" var="parcelle" >
+								<b:dataTableColumn  label="Couleur" >
+									<div
+										style="
+											height:70px;
+											width:70px;
+											border-radius: 25% 10%;
+											background:#{parcelle.couleurParcelle};
+											"
+										>
+										<a href="#top" style="text-decoration:none;" >
+											<b:badge
+												value="&#160;"
+												style="
+													margin-top:27px;
+													margin-left:27px;
+													background-color:#{mbParcelle.etatParcelle(parcelle)}
+													"
+												/>
+										</a>
+									</div>
+					  			</b:dataTableColumn>
+								<b:dataTableColumn value="#{parcelle.libelleParcelle}" label="Libelle" />
+								<b:dataTableColumn  label="Caractéristiques">
+									<ul style="margin-bottom:0; list-style-type:none; padding-left:0">
+									   	<li>Indice Acidité : PH #{parcelle.acidite.indiceAcidite} </li>
+									   	<li>Type de Sol : #{parcelle.typeSol.libelleTypeSol}</li>
+					       				<li>Humidite du Sol : #{parcelle.humiditeSol.libelleHumidite}</li> 					
+					       			</ul>
+								</b:dataTableColumn>
+								<b:dataTableColumn value="#{empl}" label="Création/Retrait">
+									<h:outputLabel value="Date de création : " style="font-weight:normal;"> </h:outputLabel>
+									<h:outputLabel value="#{parcelle.dateCreationParcelle}">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+									</h:outputLabel>
+								</b:dataTableColumn>
+								<b:dataTableColumn label="Action" style="text-align: center;">
+									<b:commandButton
+										value="modifier"
+										rendered="false"
+										look="primary"
+										/>						
+									<b:commandButton
+										value="retirer"
+										action="#{mbParcelle.retirerParcelle(parcelle)}"
+										rendered="#{mbParcelle.notHaveTachePlanified(parcelle)}"
+										style-class="commandButton"
+										icon-awesome="fa-close"
+										look="none"
+										style="
+											align-text:center;
+											background-color:#3E3F3A;
+											color: white;
+											"
+										/>						
+								</b:dataTableColumn>			
+							</b:dataTable>
+						</b:row>
+						
+						<b:row>
+							<b:row>
+								<h3 id="tabListeParcellesRetirees">
+									Liste des parcelles retirées
+									<a href="#top" style="text-decoration:none; margin: 10px;" > 
+										<b:iconAwesome value="table" />
+									</a>
+								</h3>
+								<hr></hr>
+							</b:row>
+							<b:row>
+							<b:column span="12">
+								<b:dataTable value="#{mbParcelle.listeParcellesRetirees}" var="parcelle" >
+									<b:dataTableColumn  label="Couleur" >
+										<div style=" height:70px; width:70px; border-radius: 25% 10%; background:#{parcelle.couleurParcelle};">
+											<a href="#top" style="text-decoration:none" > 
+												
+													<b:badge  value="&#160;" style="margin-top:27px; margin-left:27px; background-color:#{mbParcelle.etatParcelle(parcelle)}" />
+											
+											</a>
+										</div>
+						  			</b:dataTableColumn>
+									<b:dataTableColumn value="#{parcelle.libelleParcelle}" label="Libelle" />
+									<b:dataTableColumn  label="Caractéristiques">
+										<ul style="margin-bottom:0; list-style-type:none; padding-left:0">
+										   	<li>Indice Acidité : PH #{parcelle.acidite.indiceAcidite} </li>
+										   	<li>Type de Sol : #{parcelle.typeSol.libelleTypeSol}</li>
+						       				<li>Humidite du Sol : #{parcelle.humiditeSol.libelleHumidite}</li> 					
+						       			</ul>
+									</b:dataTableColumn>
+									<b:dataTableColumn value="#{empl}" label="Création/Retrait">
+										<ul style="margin-bottom:0; list-style-type:none; padding-left:0">
+										   	<li>
+										   		Date de création :  
+										   		<h:outputLabel value="#{parcelle.dateCreationParcelle}">
+													<f:convertDateTime pattern="dd/MM/yyyy" />
+												</h:outputLabel>
+										   	</li>
+										   	<li>
+										   		<h:outputLabel value="Date de retrait : " style="font-weight:normal;" > </h:outputLabel>
+										   		<h:outputLabel value="#{parcelle.dateRetraitParcelle}">
+													<f:convertDateTime pattern="dd/MM/yyyy" />
+												</h:outputLabel>					   	
+										   	</li>
+						       			</ul>
+									</b:dataTableColumn>
+									<b:dataTableColumn label="Actions" style="text-align: center;">
+										<b:commandButton
+											value="supprimer"
+											action="#{mbParcelle.supprimerDefinitivementParcelle(parcelle)}"
+											rendered="#{mbParcelle.notHaveTachePlanified(parcelle)}"
+											style-class="commandButton"
+											icon-awesome="fa-close"
+											look="none"
+											style="
+												align-text:center;
+												background-color:#3E3F3A;
+												color: white;
+											"
+											/>
+										<b:commandButton
+											value="rajouter"
+											action="#{mbParcelle.rajouterParcelle(parcelle)}"
+											rendered="#{mbParcelle.notHaveTachePlanified(parcelle)}"
+											style-class="commandButton"
+											icon-awesome="fa-undo"
+											look="none"
+											style="
+												align-text:center;
+												background-color:#3E3F3A;
+												color: white;
+											"
+											/>
+									</b:dataTableColumn>			
+								</b:dataTable>
+								</b:column>
+							</b:row>
+						</b:row>
+					</b:form>
+		</b:container>
+<!-- 	<b:navBar inverse="true" position="bottom" sticky="false"> -->
+<!--   		<b:navbarLinks> -->
+<!--     <b:navLink  href="#"> <b:socialShare  show-count="false" -->
+<!-- 							text="Jardeenons Ensemble!" shares="twitter,linkedin,facebook" -->
+<!-- 							disable-block="true" /></b:navLink> -->
+
+<!--   </b:navbarLinks> -->
+<!--   <b:navbarLinks pull="right" style="margin: 0; padding: 15px 0px 0px; text-align: center"> -->
+<!--   <b:navLink value="© Jardeeen 2019" href="accueilVisiteur.xhtml" /> -->
+<!--   </b:navbarLinks> -->
+  
+<!-- </b:navBar> -->
+
+		<h:outputScript library="js" name="selection.min.js" />
+		<h:outputScript library="js" name="code.js" />
+
+	</h:body>
+</html>	

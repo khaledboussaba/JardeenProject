@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui">
+	<b:navBar brandImg="resources/pictures/leaf65_30px.png" brand="Jardeen"
+		fluid="true">
+		<b:navbarLinks>
+			<b:dropMenu value="Accueil" icon-awesome="home"
+				outcome="accueil.xhtml">
+				<b:navLink header="Compte"></b:navLink>
+				<b:navLink value="Profil" outcome="accueil.xhtml"></b:navLink>
+				<b:navLink></b:navLink>
+				<b:navLink header="Connexion/Deconnexion"></b:navLink>
+				<b:navLink value="Connexion" outcome="identification"></b:navLink>
+				<b:navLink value="Deconnexion" outcome="accueil.xhtml"></b:navLink>
+			</b:dropMenu>
+			<b:navLink value="Adhérent" icon-awesome="users"
+				outcome="listeAdherent.xhtml">
+			</b:navLink>
+			<b:navLink value="Terrain(Les jardins)" icon-awesome="book"
+				outcome="accueil.xhtml">
+			</b:navLink>
+			<b:navLink value="Le planning" icon-awesome="calendar"
+				outcome="accueil.xhtml">
+			</b:navLink>
+			<!-- l'icone ne s'affiche pas, je sais pas pourquoi -->
+			<b:dropMenu value="Les Intrants" icon-awesome="fa-gears">
+				<b:navLink value="Plantes" outcome="accueil.xhtml">
+				</b:navLink>
+				<b:navLink value="Outils" outcome="accueil.xhtml">
+				</b:navLink>
+			</b:dropMenu>
+			<!-- l'icone ne s'affiche pas, je sais pas pourquoi  -->
+			<b:navLink value="Contact" icon-awesome="fa-bullhorn"
+				outcome="accueil.xhtml">
+			</b:navLink>
+		</b:navbarLinks>
+	</b:navBar>
+</ui:composition>
+
+

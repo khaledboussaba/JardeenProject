@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	version="3.1">
+	<display-name>AppJardeenWeb</display-name>
+	<context-param>
+		<param-name>javax.faces.PROJECT_STAGE</param-name>
+		<param-value>Development</param-value>
+	</context-param>
+	<context-param>
+		<param-name>net.bootsfaces.blockUI</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	<context-param>
+		<param-name>primefaces.FONT_AWESOME</param-name>
+		<param-value>true</param-value>
+	</context-param>
+<!-- 	<context-param> -->
+<!-- 		<param-name>BootsFaces_USETHEME</param-name> -->
+<!-- 		<param-value>sandstone</param-value> -->
+<!-- 	</context-param> -->
+	<context-param>
+		<param-name>BootsFaces_THEME</param-name>
+		<param-value>sandstone</param-value>
+	</context-param>
+	<servlet>
+		<servlet-name>Faces Servlet</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>*.xhtml</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>*.jsp</url-pattern>
+	</servlet-mapping>
+	    <mime-mapping>
+    <extension>eot</extension>
+    <mime-type>application/vnd.ms-fontobject</mime-type>
+</mime-mapping>
+<mime-mapping>  
+    <extension>otf</extension>  
+    <mime-type>font/opentype</mime-type>  
+</mime-mapping>      
+<mime-mapping>  
+    <extension>ttf</extension>  
+    <mime-type>application/x-font-ttf</mime-type>  
+</mime-mapping>      
+<mime-mapping>  
+    <extension>woff</extension>  
+    <mime-type>application/x-font-woff</mime-type>  
+</mime-mapping>
+<mime-mapping>  
+    <extension>woff2</extension>  
+    <mime-type>application/x-font-woff2</mime-type>  
+</mime-mapping>
+<mime-mapping>  
+    <extension>svg</extension>  
+    <mime-type>image/svg+xml</mime-type>  
+</mime-mapping>
+<listener>
+	<listener-class>fr.afcepf.ai105.p3.g1.appjardeen.controller.Timeout</listener-class>
+</listener>
+<error-page>
+	<exception-type>javax.faces.application.ViewExpiredException</exception-type>
+	<location>/accueilVisiteur.xhtml</location>
+</error-page>
+</web-app>

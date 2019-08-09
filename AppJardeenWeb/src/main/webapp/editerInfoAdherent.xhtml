@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+	<ui:composition template="/masterArche.xhtml">
+		<ui:define name="head">
+			<f:metadata>
+				<f:event listener="#{mbaffichAdherent.init()}" type="preRenderView"></f:event>
+			</f:metadata>
+		</ui:define>
+		<ui:define name="title">Formulaire Adherent
+			<h:outputStylesheet name="css/masterArche.css" />
+		</ui:define>
+	<ui:define name="contentCore">
+		<h2>Modifier mes informations</h2>
+		<hr></hr>
+	  <b:form>
+	    <b:panel styleClass="pannelFormulaireTache">
+		
+  		<h:outputLabel value="Nom :" /><h:inputText value="#{mbConnect.adherent.nomNaissance}" />
+  		<h:outputLabel value="Prénom :" /><h:inputText value="#{mbConnect.adherent.prenom}"/>
+    	<b:selectOneMenu required="true" label="Civilité :" value="#{mbConnect.adherent.sexe.libelleSexe}">
+			<f:selectItems value="#{mbEditInfoAdherent.civilites}" 
+						   var="civilite" 
+					       itemValue="#{civilite.libelleSexe}"
+					       itemLabel="#{civilite.libelleSexe}" />
+		</b:selectOneMenu>
+  		<b:selectOneMenu required="true" label="Niveau de compétence" value="#{mbConnect.adherent.competence.libelleCompetence}">
+			<f:selectItems value="#{mbEditInfoAdherent.competences}" 
+						   var="competence" 
+					       itemValue="#{competence.libelleCompetence}"
+					       itemLabel="#{competence.libelleCompetence}" />
+		</b:selectOneMenu>
+		
+  		<b:dateTimePicker value="#{mbConnect.adherent.dateDeNaissance}"  show-icon="true" show-time="false" />
+  		<b:row style="margin: 20px;">
+	  		<h:outputLabel value="Email :" /><h:inputText value="#{mbConnect.adherent.email}"/>
+	  		<h:outputLabel value="Login :" /><h:inputText id="idLogin" value="#{mbConnect.adherent.login}"/>
+	  		<h:outputLabel value="Mot de passe :" /><h:inputText value="#{mbConnect.adherent.password}"/>
+	  		<h:outputLabel value="Numèro de téléphone :" /><h:inputText value="#{mbConnect.adherent.telephone}"/>
+	  	</b:row>
+	  	<b:commandButton value="Valider" icon-awesome="fa-check-square-o" style-class="commandButton" action="#{mbEditInfoAdherent.mAjInfoAdherent()}"/>
+  		<b:commandButton value="Annuler" icon-awesome="fa-remove" style-class="commandButton" action="pageAdherent.xhtml"/>
+  	</b:panel>
+  </b:form>
+
+</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<ui:composition template="/masterArche.xhtml">
+	<ui:define name="title">Les Terrains</ui:define>
+	<ui:define name="script">
+		<script src="./resources/js/terrain.js" type="text/javascript"></script>
+	</ui:define>
+		<ui:define name="head">
+			<f:metadata>
+				<f:event listener="#{mbListeTerrain.init()}" type="preRenderView"></f:event>
+			</f:metadata>
+		</ui:define>
+	<ui:define name="contentCore">
+		<h2>Liste des terrains</h2>
+		<hr></hr>
+		<b:panel styleClass="pannelFormulaireTache">
+			<h:form id="terrains-non-retires" style="display: block">
+				<b:dataTable
+					value="#{mbListeTerrain.terrains}"
+					var="terrain"
+					info="false"
+					paginated="false"
+					select="false"
+					ajax="true"
+					auto-update="true"
+					>
+					<b:dataTableColumn value="#{terrain.libelleTerrain}"
+						label="Nom Terrain" selection-mode="single" />
+					<b:dataTableColumn value="#{terrain.adresse.libelleAdresse} - #{terrain.adresse.ville.libelleVille} (#{terrain.adresse.ville.codePostal})"
+						label="Adresse Terrain" />
+					<b:dataTableColumn value="#{terrain.longueur}"
+						label="Longueur Terrain" />
+					<b:dataTableColumn value="#{terrain.largeur}"
+						label="Largeur Terrain" />
+					<b:dataTableColumn label="Date de création">
+						<h:outputLabel value="#{terrain.dateCreationTerrain}">
+							<f:convertDateTime pattern="dd MMMM yyyy"/>
+						</h:outputLabel>
+					</b:dataTableColumn>
+					<b:dataTableColumn label="Affichage" rendered="#{mbaffichAdherent.affichage}">
+						<b:commandLink value="Afficher"
+							action="#{mbListeTerrain.afficherTerrain(terrain)}" 
+							/>
+					</b:dataTableColumn>
+					<b:dataTableColumn label="Action" rendered="#{mbaffichAdherent.affichage}" >
+						<b:commandLink value="Retirer" style="color: red;" action="#{mbListeTerrain.retirerTerrain(terrain)}" />
+					</b:dataTableColumn>
+					<b:dataTableColumn label="Favoris">			
+						<b:commandButton
+						action="#{mbListeTerrain.choisirTerrainFavoris(terrain)}"
+						ajax="true"
+						auto-update="true"
+						id="toto"
+						icon-awesome="#{mbListeTerrain.masquerButton(terrain)}"
+						look="none"
+						style="
+							background-color:#3E3F3A;
+							color: white;
+							"
+							/>
+						</b:dataTableColumn>
+				</b:dataTable>
+
+			</h:form>
+
+
+			<h:form id="terrains-retires" style="display: none">
+				<h3>Terrains retirés</h3>
+				<hr></hr>
+				<b:dataTable value="#{mbListeTerrain.terrainsRetires}" var="terrain"
+					responsive="true" style="width: 100% !important"
+					info="false" paginated="false" searching="false">
+					<b:dataTableColumn value="#{terrain.libelleTerrain}"
+						label="Nom Terrain" selection-mode="single" />
+					<b:dataTableColumn value="#{terrain.adresse.libelleAdresse} - #{terrain.adresse.ville.libelleVille} (#{terrain.adresse.ville.codePostal})"
+						label="Adresse Terrain" />
+					<b:dataTableColumn value="#{terrain.longueur}"
+						label="Longueur Terrain" />
+					<b:dataTableColumn value="#{terrain.largeur}"
+						label="Largeur Terrain" />
+					<b:dataTableColumn label="Date de Retrait">
+						<h:outputLabel value="#{terrain.dateRetraitTerrain}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputLabel>
+					</b:dataTableColumn>
+					<b:dataTableColumn>
+						<f:facet name="header">Action</f:facet>
+						<b:commandLink value="Rajouter"
+							action="#{mbListeTerrain.rajouterTerrain(terrain)}" />
+					</b:dataTableColumn>
+
+				</b:dataTable>
+			</h:form>
+
+
+			<input
+				type="#{mbaffichAdherent.visInput}"
+				class="pseudoCommandButton"
+				value="Ajouter un terrain"
+				onclick="javascript:toggle('#form-ajout-terrain')" />
+			<input
+				type="#{mbaffichAdherent.visInput}"
+				class="pseudoCommandButton"
+				value="Liste terrain retirés / non retiré"
+				onclick="javascript:change('#terrains-non-retires', '#terrains-retires')"  />
+
+			
+
+			<h:form id="form-ajout-terrain"
+				style="display: none;">
+				<h3>Création d'un Terrain</h3>
+				<hr></hr>
+				<b:container fluid="true">
+					<b:row>
+						<b:column medium-screen="2">
+							<h:outputText value="Libéllé" />
+						</b:column>
+						<b:column medium-screen="4">
+							<b:inputText
+								value="#{mbListeTerrain.terrain.libelleTerrain}"
+								placeholder="" />
+						</b:column>
+					</b:row>
+					<b:row>
+						<b:column medium-screen="2">
+							<h:outputText value="Adresse" />
+						</b:column>
+						<b:column medium-screen="4">
+							<b:inputText placeholder="libelle adresse"
+								value="#{mbListeTerrain.adresse.libelleAdresse}" />
+						</b:column>
+
+					</b:row>
+					<b:row>
+						<b:column medium-screen="2">
+							<h:outputText value="Ville" />
+						</b:column>
+						<b:column medium-screen="4">
+							<b:selectOneMenu value="#{mbListeTerrain.villeSelected}">
+								<f:selectItems value="#{mbListeTerrain.villes}" var="v"
+									itemValue="#{v}"
+									itemLabel="#{v.codePostal} - #{v.libelleVille}" />
+							</b:selectOneMenu>
+						</b:column>
+					</b:row>
+					<b:row>
+						<b:column medium-screen="2">
+							<h:outputText value="Longeur" />
+						</b:column>
+						<b:column medium-screen="4">
+							<b:inputText value="#{mbListeTerrain.terrain.longueur}"
+								placeholder="" />
+						</b:column>
+					</b:row>
+					<b:row>
+						<b:column medium-screen="2">
+							<h:outputText value="Largeur" />
+						</b:column>
+						<b:column medium-screen="4">
+							<b:inputText value="#{mbListeTerrain.terrain.largeur}"
+								placeholder="" />
+						</b:column>
+					</b:row>
+					<b:row>
+						<b:column span="4" offset="2">
+							<b:commandButton
+								style-class="commandButton"
+								style="width: 300px;"
+								value="Valider"
+								action="#{mbListeTerrain.creerNouveauTerrain()}"
+								icon-awesome="fa-check-square-o"/>
+						</b:column>
+					</b:row>
+
+				</b:container>
+				
+			</h:form>
+			
+			
+		</b:panel>
+		<h:form>
+			<b:commandButton icon-awesome="fa-mail-reply" value="Retour" action="pageAdherent.xhtml"/>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

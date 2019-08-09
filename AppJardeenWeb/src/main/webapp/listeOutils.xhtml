@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<ui:composition template="/masterArche.xhtml">
+	<ui:define name="title">Les Outils</ui:define>
+	<ui:define name="contentCore">
+	<h2>Liste des Outils</h2>
+	<hr></hr>
+	<b:panel styleClass="pannel2">
+		<h:form>
+			<b:row>
+			<b:column span="6" offset="2">
+			<b:dataTable value="#{mbListeOutils.outils}" var="outil" 	
+				class="editableOutilTable" info="false" paginated="false">
+				<b:dataTableColumn
+					value="#{outil.libelleOutil}"
+					label="Outil"
+					>
+				</b:dataTableColumn>
+				<b:dataTableColumn label="Quantité" style="width:30%"  rendered="#{mbaffichAdherent.affichage}">
+					<b:touchSpin 
+						id="outils"
+						value="#{outil.quantiteOutilTotale}" size="5"
+						style="text-align: center"
+						>
+					<f:ajax
+						execute="outils"
+						listener="#{mbListeOutils.modificationQuantiteOutil()}"/>
+					</b:touchSpin>
+				</b:dataTableColumn>
+			</b:dataTable>
+			<b:commandButton style-class="commandButton" icon-awesome="fa-mail-reply" value="Retour" action="pageAdherent.xhtml"/>
+			</b:column>
+			</b:row>
+		
+		</h:form>
+		</b:panel>
+	</ui:define>
+</ui:composition>
+</html>
